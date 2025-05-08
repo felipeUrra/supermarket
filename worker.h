@@ -22,17 +22,17 @@ public:
     virtual ~Worker() = 0;
 
     // Getters and setters
-    void setWorkerId(uint8_t);
-    void setName(const CustomString&);
-    void setLastName(const CustomString&);
-    void setAge(uint8_t);
-    void setTelephoneNumber(uint8_t);
-    void setPassword(const CustomString&); // i will have to create a checkIdentity() to validate the password change
-
     uint8_t getWorkerId() const;
     const CustomString& getName() const;
     const CustomString& getLastName() const;
     uint8_t getAge() const;
     uint8_t getTelephoneNumber() const;
     const CustomString& getPassword() const;
+
+    void setWorkerId(uint8_t);
+    void setName(const CustomString&);
+    void setLastName(const CustomString&);
+    void setAge(uint8_t);
+    void setTelephoneNumber(uint8_t);
+    void setPassword(const CustomString&); // i will have to create a checkIdentity() to validate the password change
 };
