@@ -13,12 +13,12 @@ Cashier::Cashier(uint8_t workerId, const CustomString& name, const CustomString&
 
 }
 
+uint8_t Cashier::getTransactionsPerformedCount() const {return transactionsPerformedCount;}
+
+CustomVector<Warning> Cashier::getWarnings() const {return warnings;}
+
 void Cashier::setTransactionsPerformedCount(uint8_t transcationPerformedCount) {
     this->transactionsPerformedCount = transactionsPerformedCount;
 }
 
 void Cashier::setWarnings(CustomVector<Warning> warnings) {this->warnings = warnings;}
-
-uint8_t Cashier::getTransactionsPerformedCount() {return transactionsPerformedCount;}
-
-CustomVector<Warning> Cashier::getWarnings() {return warnings;}

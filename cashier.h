@@ -14,9 +14,9 @@ public:
     ~Cashier() override = default;
 
     // Getters and setters
-    void setWarnings(CustomVector<Warning>);
     void setTransactionsPerformedCount(uint8_t);
+    void setWarnings(CustomVector<Warning>);
 
-    CustomVector<Warning> getWarnings();
-    uint8_t getTransactionsPerformedCount();
+    uint8_t getTransactionsPerformedCount() const;
+    CustomVector<Warning> getWarnings() const;
 };
