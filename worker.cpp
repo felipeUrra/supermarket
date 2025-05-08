@@ -6,6 +6,8 @@
 
 uint8_t Worker::nextWorkerId = 0;
 
+Worker::Worker() : workerId(nextWorkerId++), name(""), lastName(""), age(0), telephoneNumber(0), password("") {};
+
 Worker::Worker(uint8_t workerId, const CustomString& name, const CustomString& lastName, uint8_t age, uint8_t telephoneNumber, const CustomString& password) {
     setWorkerId(workerId);
     setName(name);
@@ -13,6 +15,7 @@ Worker::Worker(uint8_t workerId, const CustomString& name, const CustomString& l
     setAge(age);
     setTelephoneNumber(telephoneNumber);
     setPassword(password);
+    nextWorkerId++;
 }
 
 Worker::~Worker() {}

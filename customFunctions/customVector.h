@@ -1,42 +1,71 @@
 #pragma once
-#include <iostream>
+#include <fstream>
 
-using Type = int;
-typedef unsigned int uint;
+//#define TT template <typename T>
 
-class CustomVector {
+template <typename T>
+class CustomVector
+{
 private:
-    Type* data;
-    uint size;
-    uint capacity;
+	T* data = nullptr;
+	size_t size = 0;
+	size_t capacity = 0;
 
-    void resize(uint);
+	void resize(size_t newCapacity);
 
-    uint getNextPowerOfTwo(uint n) const;
-    uint allocateCapacity(uint n) const;
+	unsigned int getNextPowerOfTwo(unsigned int n) const;
+	unsigned int allocateCapacity(unsigned int n) const;
 
-    void copyFrom(const CustomVector&);
-    void free();
+	void copyFrom(const CustomVector& other);
+	void moveFrom(CustomVector&& other) noexcept;
+	void free();
 
 public:
-    // big four
-    CustomVector();
-    CustomVector(const CustomVector&);
-    CustomVector& operator=(const CustomVector&);
-    ~CustomVector();
+	CustomVector();
+	explicit CustomVector(size_t newSize);
 
-    CustomVector(uint);
+	CustomVector(const CustomVector<T>& other);
+	CustomVector<T>& operator=(const CustomVector<T>& other);
 
-    uint getSize() const;
-    uint getCapacity() const;
+	CustomVector(CustomVector<T>&& other) noexcept;
+	CustomVector<T>& operator=(CustomVector<T>&& other) noexcept;
 
-    CustomVector& push_back(const Type&);
-    CustomVector& pop_back();
+	size_t getSize() const;
+	size_t getCapacity() const;
 
-    CustomVector& insert(const Type&, uint);
-    CustomVector& remove(uint);
+	CustomVector& push_back(const T& element);
+	CustomVector& push_back(T&& element);
 
-    Type& operator[](uint);
+	CustomVector& pop_back();
 
-    CustomVector& clear();
+	CustomVector& insert(const T& element, size_t position);
+	CustomVector& insert(T&& element, size_t position);
+
+	CustomVector& remove(size_t position);
+
+	bool isEmpty() const;
+
+	CustomVector& clear();
+
+	const T& operator[](size_t index) const;
+	T& operator[](size_t index);
+
+	CustomVector& operator+=(const CustomVector<T>& other);
+
+	template <typename D>
+	friend CustomVector<D> operator+(const CustomVector<D>& lhs, const CustomVector<D>& rhs);
+
+	template <typename D>
+	friend bool operator==(const CustomVector<D>& lhs, const CustomVector<D>& rhs);
+
+	template <typename D>
+	friend bool operator!=(const CustomVector<D>& lhs, const CustomVector<D>& rhs);
+
+	template <typename D>
+	friend std::istream& operator>>(std::istream& is, CustomVector<D>& vector);
+
+	template <typename D>
+	friend std::ostream& operator<<(std::ostream& os, const CustomVector<D>& vector);
+
+	~CustomVector() noexcept;
 };

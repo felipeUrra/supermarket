@@ -17,6 +17,7 @@ private:
     CustomString password;
 
 public:
+    Worker();
     Worker(uint8_t, const CustomString&, const CustomString&, uint8_t, uint8_t, const CustomString&);
     virtual ~Worker() = 0;
 
