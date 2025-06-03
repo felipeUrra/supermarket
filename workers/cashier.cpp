@@ -4,25 +4,17 @@
 
 #include "cashier.h"
 
-Cashier::Cashier() : Worker(), transactionsPerformedCount(0) {}
+Cashier::Cashier() : Worker(), transactionsCount(0) {}
 
-Cashier::Cashier(uint8_t workerId, const CustomString& name, const CustomString& lastName, uint8_t age,
-                uint8_t telephoneNumber, const CustomString& password, 
-                uint8_t transactionsPerformedCount, CustomVector<Warning> warnings)
-    : Worker(workerId, name, lastName, age, telephoneNumber, password),
-      transactionsPerformedCount(transactionsPerformedCount),
-      warnings(warnings)
+Cashier::Cashier(const CustomString& name, const CustomString& lastName, int age, int telephoneNumber, const CustomString& password, int transactionsCount, CustomVector<Warning> warnings) :
+    Worker(name, lastName, age, telephoneNumber, password),
+    transactionsCount(transactionsCount),
+    warnings(warnings) {}
 
-{
 
-}
-
-uint8_t Cashier::getTransactionsPerformedCount() const {return transactionsPerformedCount;}
-
+//Getters and setters
+int Cashier::getTransactionsCount() const {return transactionsCount;}
 CustomVector<Warning> Cashier::getWarnings() const {return warnings;}
 
-void Cashier::setTransactionsPerformedCount(uint8_t transcationPerformedCount) {
-    this->transactionsPerformedCount = transactionsPerformedCount;
-}
-
+void Cashier::setTransactionsCount(int transcationCount) {this->transactionsCount = transactionsCount;}
 void Cashier::setWarnings(CustomVector<Warning> warnings) {this->warnings = warnings;}

@@ -9,18 +9,22 @@
 
 class Cashier : public Worker{
 private:    
-    uint8_t transactionsPerformedCount;
+    int transactionsCount;
     CustomVector<Warning> warnings;
 
 public:
     Cashier();
-    Cashier(uint8_t, const CustomString&, const CustomString&, uint8_t, uint8_t, const CustomString&, uint8_t, CustomVector<Warning>);
-    ~Cashier() override = default;
+    Cashier(const CustomString& name, const CustomString& lastName,
+        int age,int telephoneNumber,
+        const CustomString& password,
+        int transactionsCount, CustomVector<Warning> warnings);
+    
+    ~Cashier() = default;
 
     // Getters and setters
-    void setTransactionsPerformedCount(uint8_t);
+    void setTransactionsCount(int);
     void setWarnings(CustomVector<Warning>);
 
-    uint8_t getTransactionsPerformedCount() const;
+    int getTransactionsCount() const;
     CustomVector<Warning> getWarnings() const;
 };

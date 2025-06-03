@@ -4,33 +4,31 @@
 
 #include "worker.h"
 
-uint8_t Worker::nextWorkerId = 0;
+int Worker::nextId = 0;
 
-Worker::Worker() : workerId(nextWorkerId++), name(""), lastName(""), age(0), telephoneNumber(0), password("") {};
+Worker::Worker() : id(nextId++), name(""), lastName(""), age(0), telephoneNumber(0), password("") {};
 
-Worker::Worker(uint8_t workerId, const CustomString& name, const CustomString& lastName, uint8_t age, uint8_t telephoneNumber, const CustomString& password) {
-    setWorkerId(workerId);
-    setName(name);
-    setLastName(lastName);
-    setAge(age);
-    setTelephoneNumber(telephoneNumber);
-    setPassword(password);
-    nextWorkerId++;
-}
+Worker::Worker(const CustomString& name, const CustomString& lastName,int age, int telephoneNumber, const CustomString& password) :
+    id(nextId++),
+    name(name),
+    lastName(lastName),
+    age(age),
+    telephoneNumber(telephoneNumber),
+    password(password) {}
 
 Worker::~Worker() {}
 
 // Getters and setters
-uint8_t Worker::getWorkerId() const {return this->workerId;}
+int Worker::getId() const {return this->id;}
 const CustomString& Worker::getName() const {return this->name;}
 const CustomString& Worker::getLastName() const {return this->lastName;}
-uint8_t Worker::getAge() const {return this->age;}
-uint8_t Worker::getTelephoneNumber() const {return this->telephoneNumber;}
-const  CustomString& Worker::getPassword() const {return this->password;} // i will have to add all the needed logic to change it after the first time
+int Worker::getAge() const {return this->age;}
+int Worker::getTelephoneNumber() const {return this->telephoneNumber;}
+const CustomString& Worker::getPassword() const {return this->password;}
 
-void Worker::setWorkerId(uint8_t workerId) {this->workerId = workerId;}
+void Worker::setWorkerId(int id) {this->id = id;}
 void Worker::setName(const CustomString& name) {this->name = name;}
 void Worker::setLastName(const CustomString& lastName) {this->lastName = lastName;}
-void Worker::setAge(uint8_t age) {this->age = age;}
-void Worker::setTelephoneNumber(uint8_t telephoneNumber) {this->telephoneNumber = telephoneNumber;}
+void Worker::setAge(int age) {this->age = age;}
+void Worker::setTelephoneNumber(int telephoneNumber) {this->telephoneNumber = telephoneNumber;}
 void Worker::setPassword(const CustomString& password) {this->password = password;}

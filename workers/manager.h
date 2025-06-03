@@ -6,5 +6,19 @@
 #include "worker.h"
 
 class Manager : public Worker {
+private:
+    CustomString specialCode;
 
+public: 
+    Manager();
+    Manager(const CustomString& name, const CustomString& lastName,
+        int age,int telephoneNumber,
+        const CustomString& password,
+        const CustomString& specialCode);
+    
+    ~Manager() = default;
+
+    //getters and setters
+    const CustomString& getSpecialCode() const;
+    void setSpecialCode(const CustomString& name);
 };
