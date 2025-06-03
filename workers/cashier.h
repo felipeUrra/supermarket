@@ -23,8 +23,8 @@ public:
 
     // Getters and setters
     void setTransactionsCount(int);
-    void setWarnings(CustomVector<Warning>);
+    void setWarnings(CustomVector<Warning>&);
 
     int getTransactionsCount() const;
-    CustomVector<Warning> getWarnings() const;
+    CustomVector<Warning>& getWarnings();
 };

@@ -14,7 +14,7 @@ Cashier::Cashier(const CustomString& name, const CustomString& lastName, int age
 
 //Getters and setters
 int Cashier::getTransactionsCount() const {return transactionsCount;}
-CustomVector<Warning> Cashier::getWarnings() const {return warnings;}
+CustomVector<Warning>& Cashier::getWarnings() {return warnings;}
 
 void Cashier::setTransactionsCount(int transcationCount) {this->transactionsCount = transactionsCount;}
-void Cashier::setWarnings(CustomVector<Warning> warnings) {this->warnings = warnings;}
+void Cashier::setWarnings(CustomVector<Warning>& warnings) {this->warnings = warnings;}
