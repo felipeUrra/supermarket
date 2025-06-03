@@ -12,5 +12,5 @@ Manager::Manager(const CustomString& name, const CustomString& lastName, int age
 
 
 //getters and setters
-const CustomString& Manager::getSpecialCode() const{return specialCode;}
+const CustomString& Manager::getSpecialCode() const{return this->specialCode;}
 void Manager::setSpecialCode(const CustomString& specialCode) {this->specialCode = specialCode;}

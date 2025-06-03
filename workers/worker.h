@@ -31,7 +31,6 @@ public:
     int getTelephoneNumber() const;
     const CustomString& getPassword() const;
 
-    void setWorkerId(int id);
     void setName(const CustomString& name);
     void setLastName(const CustomString& lastName);
     void setAge(int age);

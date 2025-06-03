@@ -26,7 +26,6 @@ int Worker::getAge() const {return this->age;}
 int Worker::getTelephoneNumber() const {return this->telephoneNumber;}
 const CustomString& Worker::getPassword() const {return this->password;}
 
-void Worker::setWorkerId(int id) {this->id = id;}
 void Worker::setName(const CustomString& name) {this->name = name;}
 void Worker::setLastName(const CustomString& lastName) {this->lastName = lastName;}
 void Worker::setAge(int age) {this->age = age;}
