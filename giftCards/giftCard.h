@@ -2,6 +2,7 @@
 // Course project - 09Supermarket
 // OOP(practice) - 2024-2025
 
+#pragma once
 #include "../customFunctions/customString.h"
 
 enum class GiftCardType {
@@ -30,5 +31,5 @@ public:
     void setDiscount(double discount);
 
 
-    const CustomString& getTypeAsString() const;
+    const char* getTypeAsString() const;
 };
