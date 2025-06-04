@@ -4,7 +4,11 @@
 
 #include "singleCategoryGiftCard.h"
 
-SingleCategoryGiftCard::SingleCategoryGiftCard(GiftCardType type, Category* category) :
-    GiftCard(type),
+SingleCategoryGiftCard::SingleCategoryGiftCard(double discount, Category* category) :
+    GiftCard(GiftCardType::SingleCategory, discount),
     category(category) {}
 
+
+//getters and setters
+Category* SingleCategoryGiftCard::getCategory() {return this->category;}
+void SingleCategoryGiftCard::setCategory(Category* category) {this->category = category;}

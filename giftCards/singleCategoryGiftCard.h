@@ -10,7 +10,7 @@ private:
     Category* category;
 
 public:
-    SingleCategoryGiftCard(GiftCardType type, Category* category);
+    SingleCategoryGiftCard(double discount, Category* category);
     ~SingleCategoryGiftCard() = default;
 
     //getters and setters
