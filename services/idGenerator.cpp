@@ -1,0 +1,20 @@
+// Felipe Urra Rivadeneira #0MI8000066 CI Group6
+// Course project - 09Supermarket
+// OOP(practice) - 2024-2025
+
+#include "idGenerator.h"
+
+IdGenerator::IdGenerator() : workerId(100), transactionId(1), categoryId(0) {}
+
+IdGenerator& IdGenerator::getInstance() {
+    static IdGenerator instance; // Se crea una vez, la primera vez que se llama
+    return instance;
+}
+
+int IdGenerator::getWorkerId() const {return workerId;}
+int IdGenerator::getTransactionId() const {return transactionId;}
+int IdGenerator::getCategoryId() const {return categoryId;}
+
+void IdGenerator::setWorkerId(int workerId) {this->workerId = workerId;}
+void IdGenerator::setTransactionId(int transactionId) {this->transactionId = transactionId;}
+void IdGenerator::setCategoryId(int categoryId) {this->categoryId = categoryId;}
