@@ -3,7 +3,7 @@
 // OOP(practice) - 2024-2025
 
 #pragma once
-#include "manager.h"
+#include "workers/manager.h"
 #include "customFunctions/customString.h"
 
 enum class WarningGrade {Low = 100, Middle = 200, High = 300};
