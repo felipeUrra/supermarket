@@ -2,6 +2,8 @@
 // Course project - 09Supermarket
 // OOP(practice) - 2024-2025
 
+#pragma once
+
 class IdGenerator {
 private:
     int workerId;
@@ -16,9 +18,9 @@ private:
 public:
     static IdGenerator& getInstance();
 
-    int getWorkerId() const;
-    int getTransactionId() const;
-    int getCategoryId() const;
+    int getWorkerId();
+    int getTransactionId();
+    int getCategoryId();
 
     void setWorkerId(int workerId);
     void setTransactionId(int transactionId);

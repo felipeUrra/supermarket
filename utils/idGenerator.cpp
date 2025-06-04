@@ -11,9 +11,9 @@ IdGenerator& IdGenerator::getInstance() {
     return instance;
 }
 
-int IdGenerator::getWorkerId() const {return workerId;}
-int IdGenerator::getTransactionId() const {return transactionId;}
-int IdGenerator::getCategoryId() const {return categoryId;}
+int IdGenerator::getWorkerId() {return workerId++;}
+int IdGenerator::getTransactionId() {return transactionId++;}
+int IdGenerator::getCategoryId() {return categoryId++;}
 
 void IdGenerator::setWorkerId(int workerId) {this->workerId = workerId;}
 void IdGenerator::setTransactionId(int transactionId) {this->transactionId = transactionId;}
