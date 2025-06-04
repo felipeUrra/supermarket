@@ -2,19 +2,19 @@
 // Course project - 09Supermarket
 // OOP(practice) - 2024-2025
 
+#pragma once
 #include "../customFunctions/customString.h"
+#include "../utils/idGenerator.h"
 
 class Category {
 private:
-    static int nextId;
-
     CustomString name;
     CustomString description;
     int id;
 
 public:
-    Category();
-    Category(const CustomString& name, const CustomString& description);
+    Category(IdGenerator* idGenerator);
+    Category(IdGenerator* idGenerator, const CustomString& name, const CustomString& description);
     ~Category() = default;
 
     //getters and setters

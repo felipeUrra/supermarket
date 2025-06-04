@@ -2,6 +2,7 @@
 // Course project - 09Supermarket
 // OOP(practice) - 2024-2025
 
+#pragma once
 #include "product.h"
 
 class ProductByWeight : public Product {

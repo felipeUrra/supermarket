@@ -4,14 +4,12 @@
 
 #include "category.h"
 
-int Category::nextId = 0;
+Category::Category(IdGenerator* idGenerator) : name(""), description(""), id(idGenerator->getCategoryId()) {}
 
-Category::Category() : name(""), description(""), id(nextId++) {}
-
-Category::Category(const CustomString& name, const CustomString& description) :
+Category::Category(IdGenerator* idGenerator ,const CustomString& name, const CustomString& description) :
     name(name),
     description(description),
-    id(nextId++) {}
+    id(idGenerator->getCategoryId()) {}
 
 //getters and setters
     const CustomString& Category::getName() const {return name;}
