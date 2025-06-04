@@ -3,6 +3,8 @@
 // OOP(practice) - 2024-2025
 
 #include "workers/cashier.h"
+#include "products/product.h"
+#include "customFunctions/customVector.h"
 
 class Transaction {
 private:
@@ -13,6 +15,7 @@ private:
     CustomString date;
     CustomString time;
     int id;
+    CustomVector<Product> products;
 
     void setActualDateAndTime(); // maybe put it in a class for Utils
 
