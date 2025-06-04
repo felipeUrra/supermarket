@@ -19,13 +19,16 @@ private:
     void setCode();
 
 public:
-    GiftCard(GiftCardType type);
+    GiftCard(GiftCardType type, double discount);
     ~GiftCard() = default;
 
+    //getters and setters
     const CustomString& getCode() const;
     GiftCardType getType() const;
-    const CustomString& getTypeAsString() const;
     double getDiscount() const;
 
     void setDiscount(double discount);
+
+
+    const CustomString& getTypeAsString() const;
 };

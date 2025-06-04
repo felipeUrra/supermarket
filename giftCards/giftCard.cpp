@@ -4,7 +4,7 @@
 
 #include "giftCard.h"
 
-GiftCard::GiftCard(GiftCardType type) : type(type) {
+GiftCard::GiftCard(GiftCardType type, double discount) : type(type), discount(discount) {
     setCode();
 }
 
@@ -14,3 +14,12 @@ void GiftCard::setCode() {
 
 //getters and setters
 const CustomString& GiftCard::getCode() const {return this->code;}
+GiftCardType GiftCard::getType() const {return this->type;}
+double GiftCard::getDiscount() const {return this->discount;}
+
+void GiftCard::setDiscount(double discount) {this->discount = discount;}
+
+
+const CustomString& GiftCard::getTypeAsString() const {
+
+}
