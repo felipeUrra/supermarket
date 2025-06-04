@@ -4,12 +4,16 @@
 
 #include "worker.h"
 
-int Worker::nextId = 0;
+Worker::Worker(IdGenerator* idGenerator) :
+    id(idGenerator->getWorkerId()),
+    name(""),
+    lastName(""),
+    age(0),
+    telephoneNumber(0),
+    password("") {};
 
-Worker::Worker() : id(nextId++), name(""), lastName(""), age(0), telephoneNumber(0), password("") {};
-
-Worker::Worker(const CustomString& name, const CustomString& lastName,int age, int telephoneNumber, const CustomString& password) :
-    id(nextId++),
+Worker::Worker(IdGenerator* idGenerator ,const CustomString& name, const CustomString& lastName,int age, int telephoneNumber, const CustomString& password) :
+    id(idGenerator->getWorkerId()),
     name(name),
     lastName(lastName),
     age(age),

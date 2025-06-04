@@ -4,11 +4,10 @@
 
 #pragma once
 #include "../customFunctions/customString.h"
+#include "../utils/idGenerator.h"
 
 class Worker {
 private:
-    static int nextId;
-
     int id;
     CustomString name;
     CustomString lastName;
@@ -17,8 +16,8 @@ private:
     CustomString password;
 
 public:
-    Worker();
-    Worker(const CustomString& name, const CustomString& lastName,
+    Worker(IdGenerator* idGenerator);
+    Worker(IdGenerator* idGenerator, const CustomString& name, const CustomString& lastName,
         int age, int telephoneNumber, const CustomString& password);
     
     virtual ~Worker() = 0;

@@ -10,8 +10,8 @@ private:
     CustomString specialCode;
 
 public: 
-    Manager();
-    Manager(const CustomString& name, const CustomString& lastName,
+    Manager(IdGenerator* idGenerator);
+    Manager(IdGenerator* idGenerator, const CustomString& name, const CustomString& lastName,
         int age,int telephoneNumber,
         const CustomString& password,
         const CustomString& specialCode);

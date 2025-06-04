@@ -4,10 +4,10 @@
 
 #include "manager.h"
 
-Manager::Manager() : Worker(), specialCode("") {}
+Manager::Manager(IdGenerator* idGenerator) : Worker(idGenerator), specialCode("") {}
 
-Manager::Manager(const CustomString& name, const CustomString& lastName, int age, int telephoneNumber, const CustomString& password, const CustomString& specialCode) :
-    Worker(name, lastName, age, telephoneNumber, password),
+Manager::Manager(IdGenerator* idGenerator, const CustomString& name, const CustomString& lastName, int age, int telephoneNumber, const CustomString& password, const CustomString& specialCode) :
+    Worker(idGenerator, name, lastName, age, telephoneNumber, password),
     specialCode(specialCode) {}
 
 

@@ -4,8 +4,8 @@
 
 #pragma once
 #include "worker.h"
-#include "warning.h"
-#include "customFunctions/customVector.h"
+#include "../warning.h"
+#include "../customFunctions/customVector.h"
 
 class Cashier : public Worker{
 private:    
@@ -13,8 +13,8 @@ private:
     CustomVector<Warning> warnings;
 
 public:
-    Cashier();
-    Cashier(const CustomString& name, const CustomString& lastName,
+    Cashier(IdGenerator* idGenerator);
+    Cashier(IdGenerator* idGenerator, const CustomString& name, const CustomString& lastName,
         int age,int telephoneNumber,
         const CustomString& password,
         int transactionsCount, CustomVector<Warning> warnings);
