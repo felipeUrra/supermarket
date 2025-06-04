@@ -20,6 +20,8 @@ double GiftCard::getDiscount() const {return this->discount;}
 void GiftCard::setDiscount(double discount) {this->discount = discount;}
 
 
-const CustomString& GiftCard::getTypeAsString() const {
-
+const char* GiftCard::getTypeAsString() const {
+    if (this->type == GiftCardType::SingleCategory) {return "SingleCategory";}
+    if (this->type == GiftCardType::MultipleCategories) {return "MultipleCategories";}
+    return "AllProducts";
 }
