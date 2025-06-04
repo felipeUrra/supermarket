@@ -42,6 +42,7 @@ double Transaction::getTotal() const {return this->total;}
 const CustomString& Transaction::getDate() const {return this->date;}
 const CustomString& Transaction::getTime() const {return this->time;}
 int Transaction::getId() const {return this->id;}
+CustomVector<Product*>& Transaction::getProducts() {return this->products;}
 
 void Transaction::setCashier(Cashier* cashier) {this->cashier = cashier;}
 void Transaction::setTotal(double total) {this->total = total;}

@@ -15,7 +15,8 @@ private:
     CustomString date;
     CustomString time;
     int id;
-    CustomVector<Product> products;
+    CustomVector<Product*> products;
+
 
     void setActualDateAndTime(); // maybe put it in a class for Utils
 
@@ -30,6 +31,7 @@ public:
     const CustomString& getDate() const;
     const CustomString& getTime() const;
     int getId() const;
+    CustomVector<Product*>& getProducts();
 
     void setCashier(Cashier* cashier);
     void setTotal(double total);
