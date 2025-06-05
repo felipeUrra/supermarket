@@ -96,11 +96,48 @@ CustomString& CustomString::operator+=(const CustomString& other)
 	return *this;
 }
 
+CustomString& CustomString::operator+=(char c)
+{
+	CustomString str = "0";
+	str[0] = c;
+
+	if (getSize() + 1 >= getCapacity())
+	{
+		resize(allocateCapacity(getSize() + 1));
+	}
+
+	strncat(this->data, str.data, str.getSize());
+	
+	this->size += str.getSize();
+
+	return *this;
+}
+
 CustomString operator+(const CustomString& lhs, const CustomString& rhs)
 {
 	CustomString toReturn(lhs.getSize() + rhs.getSize());
 
 	toReturn += lhs;
+	toReturn += rhs;
+
+	return toReturn;
+}
+
+CustomString operator+(const CustomString& lhs, char c)
+{
+	CustomString toReturn(lhs.getSize() + c);
+
+	toReturn += lhs;
+	toReturn += c;
+
+	return toReturn;
+}
+
+CustomString operator+(char c, const CustomString& rhs)
+{
+	CustomString toReturn(c + rhs.getSize());
+
+	toReturn += c;
 	toReturn += rhs;
 
 	return toReturn;

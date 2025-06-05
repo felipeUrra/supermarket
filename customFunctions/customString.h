@@ -47,7 +47,10 @@ public:
 	char& operator[](size_t idx);
 
 	CustomString& operator+=(const CustomString& other);
+	CustomString& operator+=(char c);
 	friend CustomString operator+(const CustomString& lhs, const CustomString& rhs);
+	friend CustomString operator+(const CustomString& lhs, char c);
+	friend CustomString operator+(char c, const CustomString& rhs);
 
 	CustomString substr(size_t begin, size_t howMany) const;
 
