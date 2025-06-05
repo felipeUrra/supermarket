@@ -4,13 +4,39 @@
 
 #include "manager.h"
 
-Manager::Manager(IdGenerator* idGenerator) : Worker(idGenerator), specialCode("") {}
+Manager::Manager(IdGenerator* idGenerator, RandomNumberGenerator* randomNumberGenerator) :
+    Worker(idGenerator)
+    {
+        generateSpecialCode(randomNumberGenerator);
+    }
 
-Manager::Manager(IdGenerator* idGenerator, const CustomString& name, const CustomString& lastName, int age, int telephoneNumber, const CustomString& password, const CustomString& specialCode) :
+Manager::Manager(IdGenerator* idGenerator, RandomNumberGenerator* randomNumberGenerator, const CustomString& name, const CustomString& lastName, int age, int telephoneNumber, const CustomString& password) :
     Worker(idGenerator, name, lastName, age, telephoneNumber, password),
-    specialCode(specialCode) {}
+    specialCode(specialCode)
+    {
+        generateSpecialCode(randomNumberGenerator);
+    }
 
 
 //getters and setters
 const CustomString& Manager::getSpecialCode() const{return this->specialCode;}
-void Manager::setSpecialCode(const CustomString& specialCode) {this->specialCode = specialCode;}
+
+
+void Manager::generateSpecialCode(RandomNumberGenerator* randomNumberGenerator) {
+    int codeSize = 7;
+    char str[codeSize];
+
+    for (int i = 0; i < codeSize; i++) {
+        if (i == 0 || (i >= 3 && i <= 5)) {
+            str[i] = randomNumberGenerator->getNum();
+            continue;
+        }
+        if (i >= 1 && i <= 2) {
+            str[i] = randomNumberGenerator->getCapitalLetter();
+            continue;
+        }
+        str[i] = randomNumberGenerator->getLowerCaseLetter();
+    }
+
+    this->specialCode = str;
+}

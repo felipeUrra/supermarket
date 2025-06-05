@@ -4,21 +4,23 @@
 
 #pragma once
 #include "worker.h"
+#include "../utils/randomNumberGenerator.h"
 
 class Manager : public Worker {
 private:
     CustomString specialCode;
 
+    void generateSpecialCode(RandomNumberGenerator* randomNumberGenerator);
+
 public: 
-    Manager(IdGenerator* idGenerator);
-    Manager(IdGenerator* idGenerator, const CustomString& name, const CustomString& lastName,
-        int age,int telephoneNumber,
-        const CustomString& password,
-        const CustomString& specialCode);
+    Manager(IdGenerator* idGenerator, RandomNumberGenerator* randomNumberGenerator);
+    Manager(IdGenerator* idGenerator, RandomNumberGenerator* randomNumberGenerator,
+        const CustomString& name, const CustomString& lastName,
+        int age, int telephoneNumber,
+        const CustomString& password);
     
     ~Manager() = default;
 
     //getters and setters
     const CustomString& getSpecialCode() const;
-    void setSpecialCode(const CustomString& name);
 };
