@@ -4,8 +4,8 @@
 
 #include "singleCategoryGiftCard.h"
 
-SingleCategoryGiftCard::SingleCategoryGiftCard(double discount, Category* category) :
-    GiftCard(GiftCardType::SingleCategory, discount),
+SingleCategoryGiftCard::SingleCategoryGiftCard(RandomNumberGenerator* randomNumberGenerator, IdGenerator* idGenerator, double discount, Category* category) :
+    GiftCard(randomNumberGenerator, idGenerator , GiftCardType::SingleCategory, discount),
     category(category) {}
 
 

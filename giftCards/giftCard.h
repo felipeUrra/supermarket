@@ -4,6 +4,8 @@
 
 #pragma once
 #include "../customFunctions/customString.h"
+#include "../utils/randomNumberGenerator.h"
+#include "../utils/idGenerator.h"
 
 enum class GiftCardType {
     SingleCategory = 1,
@@ -17,10 +19,10 @@ private:
     GiftCardType type;
     double discount;
 
-    void setCode();
+    void generateCode(RandomNumberGenerator* randomNumberGenerator, IdGenerator* idGenerator);
 
 public:
-    GiftCard(GiftCardType type, double discount);
+    GiftCard(RandomNumberGenerator* randomNumberGenerator, IdGenerator* idGenerator, GiftCardType type, double discount);
     ~GiftCard() = default;
 
     //getters and setters

@@ -4,5 +4,5 @@
 
 #include "allProductsGiftCard.h"
 
-AllProductsGiftCard::AllProductsGiftCard(double discount) :
-    GiftCard(GiftCardType::AllProducts, discount) {}
+AllProductsGiftCard::AllProductsGiftCard(RandomNumberGenerator* randomNumberGenerator, IdGenerator* idGenerator, double discount) :
+    GiftCard(randomNumberGenerator, idGenerator, GiftCardType::AllProducts, discount) {}

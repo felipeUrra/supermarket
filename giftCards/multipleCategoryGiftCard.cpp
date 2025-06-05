@@ -4,8 +4,8 @@
 
 #include "multipleCategoryGiftCard.h"
 
-MultipleCategoryGiftCard::MultipleCategoryGiftCard(double discount, CustomVector<Category*>& categories) :
-    GiftCard(GiftCardType::MultipleCategories, discount),
+MultipleCategoryGiftCard::MultipleCategoryGiftCard(RandomNumberGenerator* randomNumberGenerator, IdGenerator* idGenerator, double discount, CustomVector<Category*>& categories) :
+    GiftCard(randomNumberGenerator, idGenerator, GiftCardType::MultipleCategories, discount),
     categories(categories) {}
 
 

@@ -12,7 +12,7 @@ private:
     CustomVector<Category*> categories;
 
 public:
-    MultipleCategoryGiftCard(double discount, CustomVector<Category*>& categories);
+    MultipleCategoryGiftCard(RandomNumberGenerator* randomNumberGenerator, IdGenerator* idGenerator, double discount, CustomVector<Category*>& categories);
     ~MultipleCategoryGiftCard() = default;
 
     //getters and setters
