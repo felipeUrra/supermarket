@@ -1,13 +1,20 @@
+// Felipe Urra Rivadeneira #0MI8000066 CI Group6
+// Course project - 09Supermarket
+// OOP(practice) - 2024-2025
+
 #include <iostream>
-#include "utils/idGenerator.h"
+#include "giftCards/giftCard.h"
 
 int main() {
 
-    IdGenerator& n1 = IdGenerator::getInstance();
-    IdGenerator& n2 = IdGenerator::getInstance();
+    IdGenerator& i = IdGenerator::getInstance();
+    RandomNumberGenerator& r = RandomNumberGenerator::getInstance();
 
-    std::cout << n1.getWorkerId() << '\n';
-    std::cout << n2.getWorkerId() << '\n';
+    GiftCard gfc1(&r, &i, GiftCardType::AllProducts, 10);
+    GiftCard gfc2(&r, &i, GiftCardType::AllProducts, 10);
+
+    std::cout << gfc1.getCode() << '\n';
+    std::cout << gfc2.getCode() << '\n';
 
     return 0;
 }
