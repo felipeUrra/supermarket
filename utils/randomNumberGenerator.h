@@ -10,7 +10,7 @@ private:
     char capitalLetter;
     char lowerCaseLetter;
 
-    RandomNumberGenerator() = default;
+    RandomNumberGenerator();
 
     RandomNumberGenerator(const RandomNumberGenerator&) = delete;
     RandomNumberGenerator& operator=(const RandomNumberGenerator&) = delete;

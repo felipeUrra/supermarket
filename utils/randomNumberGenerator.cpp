@@ -6,25 +6,26 @@
 #include <ctime>
 #include <cstdlib>
 
+RandomNumberGenerator::RandomNumberGenerator() {
+    std::srand(std::time(nullptr));
+}
+
 RandomNumberGenerator& RandomNumberGenerator::getInstance() {
     static RandomNumberGenerator instance;
     return instance;
 }
 
 int RandomNumberGenerator::getNum() {
-    std::srand(std::time(nullptr));
     this->num = std::rand() % 10;
     return this->num;
 }
 
 char RandomNumberGenerator::getCapitalLetter() {
-    std::srand(std::time(nullptr));
     this->capitalLetter = (std::rand() % 26) + 'A';
     return this->capitalLetter;
 }
 
 char RandomNumberGenerator::getLowerCaseLetter() {
-    std::srand(std::time(nullptr));
     this->lowerCaseLetter = (std::rand() % 26) + 'a';
     return this->lowerCaseLetter;
 }
