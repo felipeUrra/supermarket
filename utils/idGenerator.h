@@ -9,6 +9,7 @@ private:
     int workerId;
     int transactionId;
     int categoryId;
+    int giftCardCounter;
 
     IdGenerator();
     
@@ -21,8 +22,10 @@ public:
     int getWorkerId();
     int getTransactionId();
     int getCategoryId();
+    int getGiftCardCounter();
 
     void setWorkerId(int workerId);
     void setTransactionId(int transactionId);
     void setCategoryId(int categoryId);
+    void setGiftCardCounter(int giftCardCounter);
 };
