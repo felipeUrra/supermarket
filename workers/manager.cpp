@@ -5,13 +5,13 @@
 #include "manager.h"
 
 Manager::Manager(IdGenerator* idGenerator, RandomNumberGenerator* randomNumberGenerator) :
-    Worker(idGenerator)
+    Worker(idGenerator, Role::Manager)
     {
         generateSpecialCode(randomNumberGenerator);
     }
 
 Manager::Manager(IdGenerator* idGenerator, RandomNumberGenerator* randomNumberGenerator, const CustomString& name, const CustomString& lastName, int age, int telephoneNumber, const CustomString& password) :
-    Worker(idGenerator, name, lastName, age, telephoneNumber, password),
+    Worker(idGenerator, Role::Manager, name, lastName, age, telephoneNumber, password),
     specialCode(specialCode)
     {
         generateSpecialCode(randomNumberGenerator);
@@ -28,7 +28,7 @@ void Manager::generateSpecialCode(RandomNumberGenerator* randomNumberGenerator) 
 
     for (int i = 0; i < codeSize; i++) {
         if (i == 0 || (i >= 3 && i <= 5)) {
-            str[i] = randomNumberGenerator->getNum();
+            str[i] = randomNumberGenerator->getNum() + '0';
             continue;
         }
         if (i >= 1 && i <= 2) {

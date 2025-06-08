@@ -14,7 +14,8 @@ private:
 
 public:
     Cashier(IdGenerator* idGenerator);
-    Cashier(IdGenerator* idGenerator, const CustomString& name, const CustomString& lastName,
+    Cashier(IdGenerator* idGenerator,
+        const CustomString& name, const CustomString& lastName,
         int age,int telephoneNumber,
         const CustomString& password,
         int transactionsCount, CustomVector<Warning> warnings);

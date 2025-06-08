@@ -6,33 +6,40 @@
 #include "../customFunctions/customString.h"
 #include "../utils/idGenerator.h"
 
+enum class Role {Manager = 1, Cashier = 2};
+
 class Worker {
 private:
+    Role role;
     int id;
     CustomString name;
     CustomString lastName;
     int age;
-    int telephoneNumber;
+    int phoneNumber;
     CustomString password;
 
 public:
-    Worker(IdGenerator* idGenerator);
-    Worker(IdGenerator* idGenerator, const CustomString& name, const CustomString& lastName,
-        int age, int telephoneNumber, const CustomString& password);
+    Worker(IdGenerator* idGenerator, Role role);
+    Worker(IdGenerator* idGenerator, Role role, const CustomString& name, const CustomString& lastName,
+        int age, int phoneNumber, const CustomString& password);
     
     virtual ~Worker() = 0;
 
     // Getters and setters
+    Role getRole() const;
     int getId() const;
     const CustomString& getName() const;
     const CustomString& getLastName() const;
     int getAge() const;
-    int getTelephoneNumber() const;
+    int getPhoneNumber() const;
     const CustomString& getPassword() const;
 
     void setName(const CustomString& name);
     void setLastName(const CustomString& lastName);
     void setAge(int age);
-    void setTelephoneNumber(int telephoneNumber);
+    void setPhoneNumber(int phoneNumber);
     void setPassword(const CustomString& password);
+
+
+    const CustomString getRoleAsString() const;
 };

@@ -4,10 +4,10 @@
 
 #include "cashier.h"
 
-Cashier::Cashier(IdGenerator* idGenerator) : Worker(idGenerator), transactionsCount(0) {}
+Cashier::Cashier(IdGenerator* idGenerator) : Worker(idGenerator, Role::Cashier), transactionsCount(0) {}
 
 Cashier::Cashier(IdGenerator* idGenerator, const CustomString& name, const CustomString& lastName, int age, int telephoneNumber, const CustomString& password, int transactionsCount, CustomVector<Warning> warnings) :
-    Worker(idGenerator, name, lastName, age, telephoneNumber, password),
+    Worker(idGenerator, Role::Cashier, name, lastName, age, telephoneNumber, password),
     transactionsCount(transactionsCount),
     warnings(warnings) {}
 
