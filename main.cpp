@@ -3,18 +3,27 @@
 // OOP(practice) - 2024-2025
 
 #include <iostream>
-#include "giftCards/giftCard.h"
+#include "workers/manager.h"
+#include "utils/randomNumberGenerator.h"
+#include "services/consoleService.h"
 
 int main() {
 
-    IdGenerator& i = IdGenerator::getInstance();
-    RandomNumberGenerator& r = RandomNumberGenerator::getInstance();
+    // IdGenerator& i = IdGenerator::getInstance();
+    // RandomNumberGenerator& r = RandomNumberGenerator::getInstance();
 
-    GiftCard gfc1(&r, &i, GiftCardType::AllProducts, 10);
-    GiftCard gfc2(&r, &i, GiftCardType::AllProducts, 10);
+    // Manager manager(&i, &r);
 
-    std::cout << gfc1.getCode() << '\n';
-    std::cout << gfc2.getCode() << '\n';
+    // std::cout << manager.getSpecialCode() << '\n';
+
+
+    // ConsoleService& consoleService = ConsoleService::getInstance();
+
+    // int n = consoleService.readData<int>();
+    // double d = consoleService.readData<double>();
+    // CustomString str = consoleService.readData<CustomString>();
+    // CustomString words = consoleService.readWords();
+    // std::cout << n << " " << d << " " << str << " " << words <<'\n';
 
     return 0;
 }
