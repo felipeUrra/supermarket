@@ -23,7 +23,7 @@ private:
 
 public:
     GiftCard(RandomNumberGenerator* randomNumberGenerator, IdGenerator* idGenerator, GiftCardType type, double discount);
-    ~GiftCard() = default;
+    virtual ~GiftCard() = 0;
 
     //getters and setters
     const CustomString& getCode() const;
@@ -33,5 +33,5 @@ public:
     void setDiscount(double discount);
 
 
-    const char* getTypeAsString() const;
+    const CustomString& getTypeAsString() const;
 };

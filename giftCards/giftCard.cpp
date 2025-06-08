@@ -9,6 +9,8 @@ GiftCard::GiftCard(RandomNumberGenerator* randomNumberGenerator, IdGenerator* id
     generateCode(randomNumberGenerator, idGenerator);
 }
 
+GiftCard::~GiftCard() {}
+
 void GiftCard::generateCode(RandomNumberGenerator* randomNumberGenerator, IdGenerator* idGenerator) {
     int codeSize = 5;
     CustomString part1 = "12";
@@ -32,7 +34,7 @@ double GiftCard::getDiscount() const {return this->discount;}
 void GiftCard::setDiscount(double discount) {this->discount = discount;}
 
 
-const char* GiftCard::getTypeAsString() const {
+const CustomString& GiftCard::getTypeAsString() const {
     if (this->type == GiftCardType::SingleCategory) {return "SingleCategory";}
     if (this->type == GiftCardType::MultipleCategories) {return "MultipleCategories";}
     return "AllProducts";
