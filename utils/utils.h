@@ -10,4 +10,6 @@ public:
     virtual ~Utils() = 0;
 
     static CustomString intToStr(int num);
+    static bool isAllGoodWithDataEntry(int var); 
+    static bool isAllGoodWithDataEntry(double var);
 };

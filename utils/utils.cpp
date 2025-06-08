@@ -3,6 +3,8 @@
 // OOP(practice) - 2024-2025
 
 #include "utils.h"
+#include <iostream>
+#include <limits>
 
 CustomString Utils::intToStr(int num) {
     CustomString str;
@@ -28,4 +30,24 @@ CustomString Utils::intToStr(int num) {
     }
 
     return str;
+}
+
+bool Utils::isAllGoodWithDataEntry(int var) {
+    if (std::cin.fail() || var < 0) {
+        std::cout << "Invalid ID! Please enter a positive integer.\n";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return false;
+    }
+    return true;
+}
+
+bool Utils::isAllGoodWithDataEntry(double var) {
+    if (std::cin.fail()) {
+        std::cout << "Invalid grade! Please enter a positive rational number.\n";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return false;
+    }
+    return true;
 }
