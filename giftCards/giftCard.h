@@ -19,10 +19,10 @@ private:
     GiftCardType type;
     double discount;
 
-    void generateCode(RandomNumberGenerator* randomNumberGenerator, IdGenerator* idGenerator);
+    void generateCode(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator);
 
 public:
-    GiftCard(RandomNumberGenerator* randomNumberGenerator, IdGenerator* idGenerator, GiftCardType type, double discount);
+    GiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, GiftCardType type, double discount);
     virtual ~GiftCard() = 0;
 
     //getters and setters
@@ -33,5 +33,5 @@ public:
     void setDiscount(double discount);
 
 
-    const CustomString& getTypeAsString() const;
+    const CustomString getTypeAsString() const;
 };
