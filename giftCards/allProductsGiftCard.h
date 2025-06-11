@@ -7,6 +7,6 @@
 
 class AllProductsGiftCard : public GiftCard {
 public:
-    AllProductsGiftCard(RandomNumberGenerator* randomNumberGenerator, IdGenerator* idGenerator, double discount);
+    AllProductsGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount);
     ~AllProductsGiftCard() = default;
 };

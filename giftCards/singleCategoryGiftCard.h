@@ -11,7 +11,7 @@ private:
     Category* category;
 
 public:
-    SingleCategoryGiftCard(RandomNumberGenerator* randomNumberGenerator, IdGenerator* idGenerator, double discount, Category* category);
+    SingleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount, Category* category);
     ~SingleCategoryGiftCard() = default;
 
     //getters and setters
