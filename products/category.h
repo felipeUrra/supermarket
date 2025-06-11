@@ -13,8 +13,8 @@ private:
     int id;
 
 public:
-    Category(IdGenerator* idGenerator);
-    Category(IdGenerator* idGenerator, const CustomString& name, const CustomString& description);
+    Category(IdGenerator& idGenerator);
+    Category(IdGenerator& idGenerator, const CustomString name, const CustomString description);
     ~Category() = default;
 
     //getters and setters
