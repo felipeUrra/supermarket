@@ -20,8 +20,8 @@ private:
     void setActualDateAndTime(); // maybe put it in a class for Utils
 
 public:
-    Transaction(IdGenerator* idGenerator);
-    Transaction(IdGenerator* idGenerator, Cashier* cashier, double total);
+    Transaction(IdGenerator& idGenerator);
+    Transaction(IdGenerator& idGenerator, Cashier* cashier, double total);
     ~Transaction() = default;
 
     //getters and setters

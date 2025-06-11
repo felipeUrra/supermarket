@@ -5,14 +5,14 @@
 #include "transaction.h"
 #include <ctime>
 
-Transaction::Transaction(IdGenerator* idGenerator) : total(0), id(idGenerator->getTransactionId()) {
+Transaction::Transaction(IdGenerator& idGenerator) : total(0), id(idGenerator.getTransactionId()) {
     setActualDateAndTime();
 }
 
-Transaction::Transaction(IdGenerator* idGenerator, Cashier* cashier, double total) :
+Transaction::Transaction(IdGenerator& idGenerator, Cashier* cashier, double total) :
     cashier(cashier),
     total(total),
-    id(idGenerator->getTransactionId())
+    id(idGenerator.getTransactionId())
     {
         setActualDateAndTime();
     }
