@@ -11,4 +11,4 @@ ProductByUnit::ProductByUnit(const CustomString& name, Category* category, doubl
     availableAmount(availableAmount) {}
 
 int ProductByUnit::getAvailableAmount() const {return this->availableAmount;}
-void ProductByUnit::setAvailableAmount(int availableKg) {this->availableAmount = availableAmount;}
+void ProductByUnit::setAvailableAmount(int availableAmount) {this->availableAmount = availableAmount;}
