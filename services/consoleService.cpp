@@ -4,6 +4,7 @@
 
 #include "consoleService.h"
 #include "../utils/utils.h"
+#include "../commands/managerCommands.h"
 
 CustomString ConsoleService::cmd = "";
 
@@ -19,31 +20,30 @@ const CustomString ConsoleService::readWords() {
     return str;
 }
 
-void ConsoleService::detectCommand(CustomString& cmd, Role loggedUserRole) {
-
+void ConsoleService::detectCommand(Worker*& loggedUser, Supermarket* supermarket) {
+    CustomString cmd = ConsoleService::readData<CustomString>();
+    if (cmd == "exit") {
+        ConsoleService::printLine("Exiting the program...");
+        exit(0);
+    } else if (cmd == "register") {
+        CommonCommands::registerUser(supermarket);
+    } else if (cmd == "login") {
+        CommonCommands::login(supermarket, loggedUser);
+    } else if (cmd == "approve") {
+        ManagerCommands::approveCashier(supermarket, loggedUser);
+    } else if (cmd == "add_category") {
+        ManagerCommands::addCategory(supermarket, loggedUser);
+    }
+    else {
+        ConsoleService::printLine("Unknown command: " + cmd);
+        ConsoleService::printLine("Please try again.");
+    }
 }
 
-// templateFunctions
-template <>
-int ConsoleService::readData<int>() {
-    int var;
-    std::cin >> var;
-    
-    return var;
+void ConsoleService::printLine(const CustomString& str) {
+    std::cout << str << std::endl;
 }
 
-template <>
-double ConsoleService::readData<double>() {
-    double var;
-    std::cin >> var;
-
-    return var;
-}
-
-template <>
-CustomString ConsoleService::readData<CustomString>() {
-    CustomString str;
-    std::cin >> str;
-
-    return str;
+void ConsoleService::discardInput() {
+    std::cin.ignore(10000, '\n');
 }

@@ -4,7 +4,8 @@
 
 #pragma once
 #include "../workers/worker.h"
-
+#include "../supermarket.h"
+#include "../commands/commonCommands.h"
 //#define TT template <typename T>
 
 class ConsoleService {
@@ -23,5 +24,29 @@ public:
 
     static const CustomString readWords();
 
-    static void detectCommand(CustomString& cmd, Role loggedUserRole);
+    static void detectCommand(Worker*& loggedUser, Supermarket* supermarket);
+
+    static void printLine(const CustomString& str);
+    static void discardInput();
 };
+
+template <>
+inline int ConsoleService::readData<int>() {
+    int var;
+    std::cin >> var;
+    return var;
+}
+
+template <>
+inline double ConsoleService::readData<double>() {
+    double var;
+    std::cin >> var;
+    return var;
+}
+
+template <>
+inline CustomString ConsoleService::readData<CustomString>() {
+    CustomString str;
+    std::cin >> str;
+    return str;
+}
