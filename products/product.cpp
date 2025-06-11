@@ -19,5 +19,5 @@ Category* Product::getCategory() {return this->category;}
 double Product::getPrice() const {return this->price;}
 
 void Product::setName(const CustomString& name) {this->name = name;}
-void Product::setCategory(Category* categoty) {this->category = category;}
+void Product::setCategory(Category* category) {this->category = category;}
 void Product::setPrice(double) {this->price = price;}

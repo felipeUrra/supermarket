@@ -22,7 +22,7 @@ public:
     double getPrice() const;
 
     void setName(const CustomString& name);
-    void setCategory(Category* categoty);
+    void setCategory(Category* category);
     void setPrice(double);
 };
 
