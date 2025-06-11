@@ -51,3 +51,8 @@ bool Utils::isAllGoodWithDataEntry(double var) {
     }
     return true;
 }
+
+bool Utils::isValidPhoneNumber(const CustomString& phoneNumber) {
+    // TODO implement
+    return true;
+}

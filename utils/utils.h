@@ -12,4 +12,5 @@ public:
     static CustomString intToStr(int num);
     static bool isAllGoodWithDataEntry(int var); 
     static bool isAllGoodWithDataEntry(double var);
+    static bool isValidPhoneNumber(const CustomString& phoneNumber);
 };
