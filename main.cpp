@@ -6,8 +6,16 @@
 #include "workers/manager.h"
 #include "utils/randomNumberGenerator.h"
 #include "services/consoleService.h"
+#include "commands/commonCommands.h"
 
 int main() {
+    ConsoleService::printLine("Welcome to FMI Supermarket Management System 2024-2025!");
+    Supermarket* supermarket = new Supermarket();
+    Worker* loggedUser = nullptr;
+    do {
+        ConsoleService::printLine("Please execute an action");
+        ConsoleService::detectCommand(loggedUser, supermarket);
+    } while (true);
 
     // IdGenerator& i = IdGenerator::getInstance();
     // RandomNumberGenerator& r = RandomNumberGenerator::getInstance();
