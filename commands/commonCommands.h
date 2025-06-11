@@ -4,10 +4,14 @@
 
 #pragma once
 
+#include "../supermarket.h"
+
 class CommonCommands {
 public:
     CommonCommands() = delete;
     virtual ~CommonCommands() = 0;
 
-    static void registerUser();
+    static void registerUser(Supermarket* supermarket);
+    static void login(Supermarket* supermarket, Worker*& loggedUser);
+    static void approveCashier(Supermarket* supermarket, Worker* loggedUser);
 };
