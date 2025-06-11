@@ -9,14 +9,13 @@
 class Manager : public Worker {
 private:
     CustomString specialCode;
-
-    void generateSpecialCode(RandomNumberGenerator* randomNumberGenerator);
+    void generateSpecialCode(RandomNumberGenerator& randomNumberGenerator);
 
 public: 
-    Manager(IdGenerator* idGenerator, RandomNumberGenerator* randomNumberGenerator);
-    Manager(IdGenerator* idGenerator, RandomNumberGenerator* randomNumberGenerator,
+    Manager(IdGenerator& idGenerator, RandomNumberGenerator& randomNumberGenerator);
+    Manager(IdGenerator& idGenerator, RandomNumberGenerator& randomNumberGenerator,
         const CustomString& name, const CustomString& lastName,
-        int age, int telephoneNumber,
+        int age, CustomString& phoneNumber,
         const CustomString& password);
     
     ~Manager() = default;

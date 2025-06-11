@@ -15,13 +15,13 @@ private:
     CustomString name;
     CustomString lastName;
     int age;
-    int phoneNumber;
+    CustomString phoneNumber;
     CustomString password;
 
 public:
-    Worker(IdGenerator* idGenerator, Role role);
-    Worker(IdGenerator* idGenerator, Role role, const CustomString& name, const CustomString& lastName,
-        int age, int phoneNumber, const CustomString& password);
+    Worker(IdGenerator& idGenerator, Role role);
+    Worker(IdGenerator& idGenerator, Role role, const CustomString& name, const CustomString& lastName,
+        int age, const CustomString& phoneNumber, const CustomString& password);
     
     virtual ~Worker() = 0;
 
@@ -31,13 +31,13 @@ public:
     const CustomString& getName() const;
     const CustomString& getLastName() const;
     int getAge() const;
-    int getPhoneNumber() const;
+    const CustomString& getPhoneNumber() const;
     const CustomString& getPassword() const;
 
     void setName(const CustomString& name);
     void setLastName(const CustomString& lastName);
     void setAge(int age);
-    void setPhoneNumber(int phoneNumber);
+    void setPhoneNumber(CustomString& phoneNumber);
     void setPassword(const CustomString& password);
 
 

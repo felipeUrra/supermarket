@@ -13,12 +13,11 @@ private:
     CustomVector<Warning> warnings;
 
 public:
-    Cashier(IdGenerator* idGenerator);
-    Cashier(IdGenerator* idGenerator,
+    Cashier(IdGenerator& idGenerator);
+    Cashier(IdGenerator& idGenerator,
         const CustomString& name, const CustomString& lastName,
-        int age,int telephoneNumber,
-        const CustomString& password,
-        int transactionsCount, CustomVector<Warning> warnings);
+        int age, const CustomString& phoneNumber,
+        const CustomString& password);
     
     ~Cashier() = default;
 

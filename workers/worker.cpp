@@ -4,18 +4,18 @@
 
 #include "worker.h"
 
-Worker::Worker(IdGenerator* idGenerator, Role role) :
+Worker::Worker(IdGenerator& idGenerator, Role role) :
     role(role),
-    id(idGenerator->getWorkerId()),
+    id(idGenerator.getWorkerId()),
     name(""),
     lastName(""),
     age(0),
-    phoneNumber(0),
+    phoneNumber(""),
     password("") {};
 
-Worker::Worker(IdGenerator* idGenerator, Role role, const CustomString& name, const CustomString& lastName,int age, int phoneNumber, const CustomString& password) :
+Worker::Worker(IdGenerator& idGenerator, Role role, const CustomString& name, const CustomString& lastName,int age, const CustomString& phoneNumber, const CustomString& password) :
     role(role),
-    id(idGenerator->getWorkerId()),
+    id(idGenerator.getWorkerId()),
     name(name),
     lastName(lastName),
     age(age),
@@ -30,13 +30,13 @@ int Worker::getId() const {return this->id;}
 const CustomString& Worker::getName() const {return this->name;}
 const CustomString& Worker::getLastName() const {return this->lastName;}
 int Worker::getAge() const {return this->age;}
-int Worker::getPhoneNumber() const {return this->phoneNumber;}
+const CustomString& Worker::getPhoneNumber() const {return this->phoneNumber;}
 const CustomString& Worker::getPassword() const {return this->password;}
 
 void Worker::setName(const CustomString& name) {this->name = name;}
 void Worker::setLastName(const CustomString& lastName) {this->lastName = lastName;}
 void Worker::setAge(int age) {this->age = age;}
-void Worker::setPhoneNumber(int telephoneNumber) {this->phoneNumber = telephoneNumber;}
+void Worker::setPhoneNumber(CustomString& phoneNumber) {this->phoneNumber = phoneNumber;}
 void Worker::setPassword(const CustomString& password) {this->password = password;}
 
 
