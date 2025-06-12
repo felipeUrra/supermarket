@@ -36,11 +36,19 @@ void CommonCommands::registerUser(Supermarket* supermarket) {
     if (role == "manager") {
         worker = new Manager(IdGenerator::getInstance(), RandomNumberGenerator::getInstance(), firstName, lastName, age, phoneNumber, password);
         supermarket->addWorker(worker);
+        ConsoleService::printLine("Manager registered successfully!");
+        
+        Manager* manager = dynamic_cast<Manager*>(worker);
+        ConsoleService::printLine("Special code: " + manager->getSpecialCode());
+        //return; la version final tiene que tener este return
     } else if (role == "cashier") {
         worker = new Cashier(IdGenerator::getInstance(), firstName, lastName, age, phoneNumber, password);
         // adding the cashier to the pending list in supermarket
         supermarket->addCashier((Cashier*)worker);
+        ConsoleService::printLine("Cashier registration pending approval from a manager.");
+        return;
     }
+    // quitar esto para version final
     ConsoleService::printLine("User registered successfully! " + worker->getName() + " " + worker->getLastName() + " with ID: " + (CustomString::valueOf(worker->getId())));
 }
 
@@ -63,33 +71,26 @@ void CommonCommands::login(Supermarket* supermarket, Worker*& loggedUser) {
     }
 }
 
-void CommonCommands::approveCashier(Supermarket* supermarket, Worker* loggedUser) {
-    if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
-        ConsoleService::printLine("You must be logged in as a manager to approve cashiers.");
+void CommonCommands::logout(Supermarket* supermarket, Worker*& loggedUser) {
+    if (loggedUser == nullptr) {
+        ConsoleService::printLine("Nobody is logged!");
+        ConsoleService::discardInput();
         return;
     }
 
-    if (supermarket->getPendingList().isEmpty()) {
-        ConsoleService::printLine("No pending cashiers to approve.");
+    loggedUser = nullptr;
+}
+
+void CommonCommands::listUserData(Supermarket* supermarket, Worker* loggedUser) {
+
+    if (loggedUser != nullptr) {
+        ConsoleService::printLine(loggedUser->getRoleAsString() + ": "
+            + loggedUser->getName() + " " + loggedUser->getLastName()
+            + " ID: " + CustomString::valueOf(loggedUser->getId()) + " phone number: " + loggedUser->getPhoneNumber()
+            + " password: " + loggedUser->getPassword());
+        
         return;
     }
 
-    int idCashier = ConsoleService::readData<int>();
-    CustomString specialCode = ConsoleService::readData<CustomString>();
-    
-    Manager* manager = dynamic_cast<Manager*>(loggedUser);
-    if (!manager || specialCode != manager->getSpecialCode()) {
-        ConsoleService::printLine("Invalid special code. You cannot approve cashiers.");
-        return;
-    }
-    for (size_t i = 0; i < supermarket->getPendingList().getSize(); i++) {
-        Cashier* cashier = supermarket->getPendingList()[i];
-        if (cashier->getId() == idCashier) {
-            supermarket->addWorker(cashier);
-            supermarket->getPendingList().remove(i);
-            ConsoleService::printLine("Cashier approved successfully!");
-            return;
-        }
-    }
-    ConsoleService::printLine("Cashier not found in pending list.");
+    ConsoleService::printLine("There is no user logged!");
 }
