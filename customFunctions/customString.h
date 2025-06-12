@@ -35,6 +35,7 @@ public:
 	CustomString& operator=(const CustomString& other);
 
 	const char* c_str() const;
+	static CustomString valueOf(int);
 
 	size_t getSize() const;
 	size_t getCapacity() const;

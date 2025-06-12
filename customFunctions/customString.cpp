@@ -3,6 +3,7 @@
 #include "customString.h"
 #include "cstring"
 #include <stdexcept>
+#include <cmath>
 
 CustomString::CustomString() : CustomString("")
 {
@@ -38,6 +39,30 @@ CustomString& CustomString::operator=(const CustomString& other)
 const char* CustomString::c_str() const
 {
 	return this->data;
+}
+
+CustomString CustomString::valueOf(int n)
+{
+	CustomString digits;
+
+	if (n == 0) {
+		digits += '0';
+		return digits;
+	}
+
+	int digitsCount = 0;
+	int auxNum = n;
+	while (auxNum > 0) {
+		auxNum /= 10;
+		digitsCount++;
+	}
+
+	for (; digitsCount > 0; digitsCount--) {
+		digits += (n / pow(10, digitsCount - 1)) + '0';
+		n %= static_cast<int>(pow(10, digitsCount - 1));
+	}
+	
+	return digits;
 }
 
 size_t CustomString::getSize() const
