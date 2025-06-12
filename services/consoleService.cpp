@@ -29,12 +29,18 @@ void ConsoleService::detectCommand(Worker*& loggedUser, Supermarket* supermarket
         CommonCommands::registerUser(supermarket);
     } else if (cmd == "login") {
         CommonCommands::login(supermarket, loggedUser);
+    } else if (cmd == "logout") {
+        CommonCommands::logout(supermarket, loggedUser);
+    } else if (cmd == "list-user-data") {
+        CommonCommands::listUserData(supermarket, loggedUser);
     } else if (cmd == "approve") {
         ManagerCommands::approveCashier(supermarket, loggedUser);
-    } else if (cmd == "add_category") {
+    } else if (cmd == "add-category") {
         ManagerCommands::addCategory(supermarket, loggedUser);
     } else if (cmd == "decline") {
         ManagerCommands::declineCashier(supermarket, loggedUser);
+    } else if (cmd == "list-pending") {
+        ManagerCommands::listPending(supermarket, loggedUser);
     }
     else {
         ConsoleService::printLine("Unknown command: " + cmd);
