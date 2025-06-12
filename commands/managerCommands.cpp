@@ -32,7 +32,8 @@ void ManagerCommands::approveCashier(Supermarket* supermarket, Worker* loggedUse
         ConsoleService::printLine("Invalid special code. You cannot approve cashiers.");
         return;
     }
-    for (size_t i = 0; i < supermarket->getPendingList().getSize(); i++) {
+
+    for (int i = 0; i < supermarket->getPendingList().getSize(); i++) {
         Cashier* cashier = supermarket->getPendingList()[i];
         if (cashier->getId() == idCashier) {
             supermarket->addWorker(cashier);
@@ -42,6 +43,38 @@ void ManagerCommands::approveCashier(Supermarket* supermarket, Worker* loggedUse
         }
     }
     ConsoleService::printLine("Cashier not found in pending list.");
+}
+
+void ManagerCommands::declineCashier(Supermarket* supermarket, Worker* loggedUser) {
+    if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
+        ConsoleService::printLine("You must be logged in as a manager to add categories.");
+        ConsoleService::discardInput();
+        return;
+    }
+
+    if (supermarket->getPendingList().isEmpty()) {
+        ConsoleService::printLine("No pending cashiers to decline.");
+        ConsoleService::discardInput();
+        return;
+    }
+
+    int idCashier = ConsoleService::readData<int>();
+    CustomString specialCode = ConsoleService::readData<CustomString>();
+
+    Manager* manager = dynamic_cast<Manager*>(loggedUser);
+    if (!manager || specialCode != manager->getSpecialCode()) {
+        ConsoleService::printLine("Invalid special code. You cannot approve cashiers.");
+        return;
+    }
+
+    for (int i = 0; i < supermarket->getPendingList().getSize(); i++) {
+        Cashier* cashier = supermarket->getPendingList()[i];
+        if (cashier->getId() == idCashier) {
+            supermarket->getPendingList().remove(i);
+            ConsoleService::printLine("Cashier declined successfully!");
+            return;
+        }
+    }
 }
 
 void ManagerCommands::addCategory(Supermarket* supermarket, Worker* loggedUser) {

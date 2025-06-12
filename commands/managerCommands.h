@@ -12,5 +12,6 @@ public:
     virtual ~ManagerCommands() = 0;
 
     static void approveCashier(Supermarket* supermarket, Worker* loggedUser);
+    static void declineCashier(Supermarket* supermarket, Worker* loggedUser);
     static void addCategory(Supermarket* supermarket, Worker* loggedUser);
 };
