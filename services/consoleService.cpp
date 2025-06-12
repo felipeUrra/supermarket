@@ -33,10 +33,13 @@ void ConsoleService::detectCommand(Worker*& loggedUser, Supermarket* supermarket
         ManagerCommands::approveCashier(supermarket, loggedUser);
     } else if (cmd == "add_category") {
         ManagerCommands::addCategory(supermarket, loggedUser);
+    } else if (cmd == "decline") {
+        ManagerCommands::declineCashier(supermarket, loggedUser);
     }
     else {
         ConsoleService::printLine("Unknown command: " + cmd);
         ConsoleService::printLine("Please try again.");
+        ConsoleService::discardInput();
     }
 }
 
