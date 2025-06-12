@@ -13,7 +13,7 @@ int main() {
     Supermarket* supermarket = new Supermarket();
     Worker* loggedUser = nullptr;
     do {
-        ConsoleService::printLine("Please execute an action");
+        std::cout << "> ";
         ConsoleService::detectCommand(loggedUser, supermarket);
     } while (true);
 
