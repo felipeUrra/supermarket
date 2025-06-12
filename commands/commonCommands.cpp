@@ -15,6 +15,7 @@ void CommonCommands::registerUser(Supermarket* supermarket) {
     CustomString role = ConsoleService::readData<CustomString>();
 	if (role != "manager" && role != "cashier") {
 		ConsoleService::printLine("Invalid role");
+        ConsoleService::discardInput();
         return;
 	}
     CustomString firstName = ConsoleService::readData<CustomString>();
@@ -22,6 +23,7 @@ void CommonCommands::registerUser(Supermarket* supermarket) {
     CustomString phoneNumber = ConsoleService::readData<CustomString>();
     if (!Utils::isValidPhoneNumber(phoneNumber)) {
 		ConsoleService::printLine("Invalid phone number");
+        ConsoleService::discardInput();
 		return;
 	}
     int age = ConsoleService::readData<int>();
@@ -39,7 +41,7 @@ void CommonCommands::registerUser(Supermarket* supermarket) {
         // adding the cashier to the pending list in supermarket
         supermarket->addCashier((Cashier*)worker);
     }
-    ConsoleService::printLine("User registered successfully! " + worker->getName() + " " + worker->getLastName() + " with ID: " + worker->getId());
+    ConsoleService::printLine("User registered successfully! " + worker->getName() + " " + worker->getLastName() + " with ID: " + (CustomString::valueOf(worker->getId())));
 }
 
 void CommonCommands::login(Supermarket* supermarket, Worker*& loggedUser) {
