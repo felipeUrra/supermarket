@@ -95,3 +95,26 @@ void ManagerCommands::addCategory(Supermarket* supermarket, Worker* loggedUser) 
     supermarket->addCategory(newCategory);
     ConsoleService::printLine("Category \"" + categoryName + "\" added successfully!");
 }
+
+void ManagerCommands::listPending(Supermarket* supermarket, Worker* loggedUser) {
+    if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
+        ConsoleService::printLine("You must be logged in as a manager to add categories.");
+        ConsoleService::discardInput();
+        return;
+    }
+
+    if (supermarket->getPendingList().isEmpty()) {
+        ConsoleService::printLine("No pending cashiers.");
+        ConsoleService::discardInput();
+        return;
+    }
+
+    for (int i = 0; i < supermarket->getPendingList().getSize(); i++) {
+        ConsoleService::printLine(supermarket->getPendingList()[i]->getRoleAsString() + ": "
+        + supermarket->getPendingList()[i]->getName()
+        + " " + supermarket->getPendingList()[i]->getLastName()
+        + " ID: " + CustomString::valueOf(supermarket->getPendingList()[i]->getId())
+        + " phone number: " + supermarket->getPendingList()[i]->getPhoneNumber()
+        + " password: " + supermarket->getPendingList()[i]->getPassword());
+    }
+}

@@ -14,4 +14,5 @@ public:
     static void approveCashier(Supermarket* supermarket, Worker* loggedUser);
     static void declineCashier(Supermarket* supermarket, Worker* loggedUser);
     static void addCategory(Supermarket* supermarket, Worker* loggedUser);
+    static void listPending(Supermarket* supermarket, Worker* loggedUser);
 };
