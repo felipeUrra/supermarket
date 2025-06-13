@@ -10,21 +10,22 @@ enum class WarningGrade {Low = 100, Middle = 200, High = 300};
 
 class Warning {
 private:
-    Manager* sender;
+    int senderId;
     CustomString description;
     WarningGrade warningGrade;
 
-public:
     Warning();
-    Warning(Manager* sender, const CustomString& description, WarningGrade WarningGrade);
+
+public:
+    Warning(int senderId, const CustomString& description, WarningGrade WarningGrade);
     ~Warning() = default;
 
     // Getters and setters
-    Manager* getSender();
+    int getSenderId();
     const CustomString& getDescription() const;
     WarningGrade getWarningGrade() const;
 
-    void setSender(Manager*);
+    void setSenderId(int senderId);
     void setDescription(const CustomString&);
     void setWarningGrade(WarningGrade);
 };

@@ -4,19 +4,19 @@
 
 #include "warning.h"
 
-Warning::Warning() : sender(nullptr), description(""), warningGrade(WarningGrade::Low) {}
+Warning::Warning() : description(""), warningGrade(WarningGrade::Low) {}
 
-Warning::Warning(Manager* sender, const CustomString& description, WarningGrade warningGrade) :
-    sender(sender),
+Warning::Warning(int senderId, const CustomString& description, WarningGrade warningGrade) :
+    senderId(senderId),
     description(description),
     warningGrade(warningGrade) {}
 
 
 //getters and setters
-Manager* Warning::getSender() {return sender;}
+int Warning::getSenderId() {return senderId;}
 const CustomString& Warning::getDescription() const {return description;}
 WarningGrade Warning::getWarningGrade() const {return warningGrade;}
 
-void Warning::setSender(Manager* sender) {this->sender = sender;}
+void Warning::setSenderId(int sender) {this->senderId = senderId;}
 void Warning::setDescription(const CustomString& description) {this->description = description;}
 void Warning::setWarningGrade(WarningGrade warningGrade) {this->warningGrade = warningGrade;}
