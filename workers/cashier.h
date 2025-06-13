@@ -10,7 +10,7 @@
 class Cashier : public Worker{
 private:    
     int transactionsCount;
-    CustomVector<Warning> warnings;
+    CustomVector<Warning*> warnings;
 
 public:
     Cashier(IdGenerator& idGenerator);
@@ -19,12 +19,16 @@ public:
         int age, const CustomString& phoneNumber,
         const CustomString& password);
     
-    ~Cashier() = default;
+    ~Cashier();
 
     // Getters and setters
     void setTransactionsCount(int);
-    void setWarnings(CustomVector<Warning>&);
+    void setWarnings(CustomVector<Warning*>&);
 
     int getTransactionsCount() const;
-    CustomVector<Warning>& getWarnings();
+    CustomVector<Warning*>& getWarnings();
+
+    // Serialize-deserialize
+    void serialize(std::ofstream& out) const override;
+    void deserialize(std::ifstream& in);
 };

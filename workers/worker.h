@@ -5,6 +5,7 @@
 #pragma once
 #include "../customFunctions/customString.h"
 #include "../utils/idGenerator.h"
+#include <fstream>
 
 enum class Role {Manager = 1, Cashier = 2};
 
@@ -40,6 +41,10 @@ public:
     void setPhoneNumber(CustomString& phoneNumber);
     void setPassword(const CustomString& password);
 
-
     const CustomString getRoleAsString() const;
+
+    // Serialize-deserialize
+    virtual void serialize(std::ofstream& out) const = 0;
+    void serializeCommon(std::ofstream& out) const;
+    void deserializeCommon(std::ifstream& in);
 };

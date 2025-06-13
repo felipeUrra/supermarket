@@ -40,3 +40,15 @@ void Manager::generateSpecialCode(RandomNumberGenerator& randomNumberGenerator) 
 
     this->specialCode = str;
 }
+
+void Manager::serialize(std::ofstream& out) const {
+    this->serializeCommon(out);
+
+    this->specialCode.serialize(out);
+}
+
+void Manager::deserialize(std::ifstream& in) {
+    this->deserializeCommon(in);
+
+    this->specialCode.deserialize(in);
+}

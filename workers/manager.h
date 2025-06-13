@@ -9,6 +9,7 @@
 class Manager : public Worker {
 private:
     CustomString specialCode;
+    
     void generateSpecialCode(RandomNumberGenerator& randomNumberGenerator);
 
 public: 
@@ -20,6 +21,10 @@ public:
     
     ~Manager() = default;
 
-    //getters and setters
+    // Getters and setters
     const CustomString& getSpecialCode() const;
+
+    // Serialize-deserialize
+    void serialize(std::ofstream& out) const override;
+    void deserialize(std::ifstream& in);
 };

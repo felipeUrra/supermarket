@@ -39,8 +39,39 @@ void Worker::setAge(int age) {this->age = age;}
 void Worker::setPhoneNumber(CustomString& phoneNumber) {this->phoneNumber = phoneNumber;}
 void Worker::setPassword(const CustomString& password) {this->password = password;}
 
-
 const CustomString Worker::getRoleAsString() const {
     if (this->role == Role::Manager) {return "Manager";}
     return "Cashier";
+}
+
+// Serialize-deserialize
+void Worker::serializeCommon(std::ofstream& out) const {
+    int valueRole = static_cast<int>(this->role);
+    out.write(reinterpret_cast<const char*>(&this->role), sizeof(this->role));
+
+    out.write(reinterpret_cast<const char*>(&this->id), sizeof(this->id));
+    
+    this->name.serialize(out);
+    this->lastName.serialize(out);
+
+    out.write(reinterpret_cast<const char*>(&this->age), sizeof(this->age));
+
+    this->phoneNumber.serialize(out);
+    this->password.serialize(out);
+}
+
+void Worker::deserializeCommon(std::ifstream& in) {
+    int valueRole;
+    in.read(reinterpret_cast<char*>(&valueRole), sizeof(valueRole));
+    this->role = static_cast<Role>(valueRole);
+
+    in.read(reinterpret_cast<char*>(&this->id), sizeof(this->id));
+
+    this->name.deserialize(in);
+    this->lastName.deserialize(in);
+
+    in.read(reinterpret_cast<char*>(&this->age), sizeof(this->age));
+
+    this->phoneNumber.deserialize(in);
+    this->password.deserialize(in);
 }
