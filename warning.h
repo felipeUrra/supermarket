@@ -14,9 +14,8 @@ private:
     CustomString description;
     WarningGrade warningGrade;
 
-    Warning();
-
 public:
+    Warning();
     Warning(int senderId, const CustomString& description, WarningGrade WarningGrade);
     ~Warning() = default;
 
@@ -28,4 +27,8 @@ public:
     void setSenderId(int senderId);
     void setDescription(const CustomString&);
     void setWarningGrade(WarningGrade);
+
+    // Serialize-deserialize
+    void serialize(std::ofstream& out) const;
+    void deserialize(std::ifstream& in);
 };
