@@ -20,11 +20,10 @@ const CustomString ConsoleService::readWords() {
     return str;
 }
 
-void ConsoleService::detectCommand(Worker*& loggedUser, Supermarket* supermarket) {
+void ConsoleService::detectCommand(Worker*& loggedUser, Supermarket* supermarket, bool& exit) {
     CustomString cmd = ConsoleService::readData<CustomString>();
     if (cmd == "exit") {
-        ConsoleService::printLine("Exiting the program...");
-        exit(0);
+        CommonCommands::exit(exit);
     } else if (cmd == "register") {
         CommonCommands::registerUser(supermarket);
     } else if (cmd == "login") {

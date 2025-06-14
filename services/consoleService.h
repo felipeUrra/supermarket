@@ -24,7 +24,7 @@ public:
 
     static const CustomString readWords();
 
-    static void detectCommand(Worker*& loggedUser, Supermarket* supermarket);
+    static void detectCommand(Worker*& loggedUser, Supermarket* supermarket, bool& exit);
 
     static void printLine(const CustomString& str);
     static void discardInput();
