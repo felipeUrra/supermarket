@@ -94,3 +94,8 @@ void CommonCommands::listUserData(Supermarket* supermarket, Worker* loggedUser) 
 
     ConsoleService::printLine("There is no user logged!");
 }
+
+void CommonCommands::exit(bool& exit) {
+    ConsoleService::printLine("Exiting the program...");
+    exit = true;
+}

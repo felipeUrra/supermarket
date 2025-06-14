@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../supermarket.h"
+#include "../system.h"
 
 class CommonCommands {
 public:
@@ -15,4 +15,5 @@ public:
     static void login(Supermarket* supermarket, Worker*& loggedUser);
     static void logout(Supermarket* supermarket, Worker*& loggedUser);
     static void listUserData(Supermarket* supermarket, Worker* loggedUser);
+    static void exit(bool& exit);
 };
