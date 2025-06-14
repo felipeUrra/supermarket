@@ -15,9 +15,12 @@ private:
     CustomVector<Cashier*> pendingList;
     
     CustomVector<Category*> categoriesList;
-    CustomVector<Product*> productsLIst;
+    CustomVector<Product*> productsList;
     CustomVector<GiftCard*> giftCardsList;
 public:
+    Supermarket() = default;
+    ~Supermarket() = default; // TODO hacer la implementacion
+
     CustomVector<Cashier*>& getPendingList();
     void addCashier(Cashier* cashier);
     void addWorker(Worker* worker);
@@ -26,4 +29,8 @@ public:
     CustomVector<Product*>& getProductsList();
     CustomVector<GiftCard*>& getGiftCardsList();
     void addCategory(Category* category);
+
+    // Serialize-deserialize
+    void serialize(std::ofstream& out) const;
+    void deserialize(std::ifstream& in);
 };
