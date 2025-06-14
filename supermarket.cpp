@@ -3,6 +3,8 @@
 // OOP(practice) - 2024-2025
 
 #include "supermarket.h"
+#include "utils/idGenerator.h"
+#include "utils/randomNumberGenerator.h"
 #include <iostream>
 
 void Supermarket::addCashier(Cashier* cashier) {
@@ -62,20 +64,29 @@ void Supermarket::deserialize(std::ifstream& in) {
     int workerListCount;
     in.read(reinterpret_cast<char*>(&workerListCount), sizeof(workerListCount));
     for (int i = 0; i < workerListCount; i++) {
-        if (this->workersList[i]->getRole() == Role::Manager) {
-            Manager* m = (Manager*)this->workersList[i];
+        int valueRole;
+        in.read(reinterpret_cast<char*>(&valueRole), sizeof(valueRole));
+
+        if (valueRole == 1) {
+            Manager* m = new Manager(IdGenerator::getInstance(), RandomNumberGenerator::getInstance());
             m->deserialize(in);
+            this->workersList.push_back(m);
             continue;
         }
 
-        Cashier* c = (Cashier*)this->workersList[i];
+        Cashier* c = new Cashier(IdGenerator::getInstance());
         c->deserialize(in);
+        this->workersList.push_back(c);
     }
 
     int pendingListCount;
     in.read(reinterpret_cast<char*>(&pendingListCount), sizeof(pendingList));
     for (int i = 0; i < pendingListCount; i++) {
-        Cashier* c = this->pendingList[i];
+        int residualRole;
+        in.read(reinterpret_cast<char*>(&residualRole), sizeof(residualRole));
+        
+        Cashier* c = new Cashier(IdGenerator::getInstance());
         c->deserialize(in);
+        this->pendingList.push_back(c);
     }
 }
