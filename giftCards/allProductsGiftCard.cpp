@@ -4,5 +4,17 @@
 
 #include "allProductsGiftCard.h"
 
+AllProductsGiftCard::AllProductsGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator) :
+    GiftCard(randomNumberGenerator, idGenerator) {}
+
 AllProductsGiftCard::AllProductsGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount) :
     GiftCard(randomNumberGenerator, idGenerator, GiftCardType::AllProducts, discount) {}
+
+// Serialize-deserialize
+void AllProductsGiftCard::serialize(std::ofstream& out) const {
+    this->serializeCommon(out);
+}
+
+void AllProductsGiftCard::deserialize(std::ifstream& in) {
+    this->deserializeCommon(in);
+}

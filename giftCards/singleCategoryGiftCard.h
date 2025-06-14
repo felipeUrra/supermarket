@@ -4,17 +4,21 @@
 
 #pragma once
 #include "giftCard.h"
-#include "../products/category.h"
 
 class SingleCategoryGiftCard : public GiftCard {
 private:
-    Category* category;
+    int categoryId;
 
 public:
-    SingleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount, Category* category);
+    SingleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerato);
+    SingleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount, int categoryId);
     ~SingleCategoryGiftCard() = default;
 
-    //getters and setters
-    Category* getCategory();
-    void setCategory(Category* category);
+    // Getters and setters
+    int getCategoryId() const;
+    void setCategoryId(int category);
+
+    // Serialize-deserialize
+    void serialize(std::ofstream& out) const override;
+    void deserialize(std::ifstream& in);
 };

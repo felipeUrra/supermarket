@@ -7,6 +7,11 @@
 
 class AllProductsGiftCard : public GiftCard {
 public:
+    AllProductsGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator);
     AllProductsGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount);
     ~AllProductsGiftCard() = default;
+
+    // Serialize-deserialize
+    void serialize(std::ofstream& out) const override;
+    void deserialize(std::ifstream& in);
 };

@@ -4,18 +4,22 @@
 
 #pragma once
 #include "giftCard.h"
-#include "../products/category.h"
 #include "../customFunctions/customVector.h"
 
 class MultipleCategoryGiftCard : public GiftCard {
 private:
-    CustomVector<Category*> categories;
+    CustomVector<int> categoriesId;
 
 public:
-    MultipleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount, CustomVector<Category*>& categories);
+    MultipleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator);
+    MultipleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount, CustomVector<int>& categoriesId);
     ~MultipleCategoryGiftCard() = default;
 
     //getters and setters
-    CustomVector<Category*>& getCategories();
-    void setCategories(CustomVector<Category*>& categories);
+    CustomVector<int>& getCategoriesId();
+    void setCategoriesId(CustomVector<int>& categoriesId);
+
+    // Serialize-deserialize
+    void serialize(std::ofstream& out) const override;
+    void deserialize(std::ifstream& in);
 };

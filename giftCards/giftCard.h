@@ -15,13 +15,14 @@ enum class GiftCardType {
 
 class GiftCard {
 private:
-    CustomString code;
     GiftCardType type;
+    CustomString code;
     double discount;
 
     void generateCode(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator);
 
 public:
+    GiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator);
     GiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, GiftCardType type, double discount);
     virtual ~GiftCard() = 0;
 
@@ -34,4 +35,9 @@ public:
 
 
     const CustomString getTypeAsString() const;
+
+    // Serialize-deserialize
+    virtual void serialize(std::ofstream& out) const = 0;
+    void serializeCommon(std::ofstream& out) const;
+    void deserializeCommon(std::ifstream& in);
 };

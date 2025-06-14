@@ -4,13 +4,39 @@
 
 #include "multipleCategoryGiftCard.h"
 
-MultipleCategoryGiftCard::MultipleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount, CustomVector<Category*>& categories) :
+MultipleCategoryGiftCard::MultipleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator) :
+    GiftCard(randomNumberGenerator, idGenerator) {}
+
+MultipleCategoryGiftCard::MultipleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount, CustomVector<int>& categoriesId) :
     GiftCard(randomNumberGenerator, idGenerator, GiftCardType::MultipleCategories, discount),
-    categories(categories) {}
+    categoriesId(categoriesId) {}
 
 
 //getters and setters
-CustomVector<Category*>& MultipleCategoryGiftCard::getCategories() {return this->categories;}
-void MultipleCategoryGiftCard::setCategories(CustomVector<Category*>& categories) {
-    this->categories = categories;
+CustomVector<int>& MultipleCategoryGiftCard::getCategoriesId() {return this->categoriesId;}
+void MultipleCategoryGiftCard::setCategoriesId(CustomVector<int>& categoriesId) {
+    this->categoriesId = categoriesId;
+}
+
+// Serialize-deserialize
+void MultipleCategoryGiftCard::serialize(std::ofstream& out) const {
+    this->serializeCommon(out);
+
+    int categoriesIdCount = this->categoriesId.getSize();
+    out.write(reinterpret_cast<const char*>(&categoriesIdCount), sizeof(categoriesIdCount));
+
+    for (int i = 0; i < categoriesIdCount; i++) {
+        out.write(reinterpret_cast<const char*>(&this->categoriesId[i]), sizeof(this->categoriesId[i]));
+    }
+}
+
+void MultipleCategoryGiftCard::deserialize(std::ifstream& in) {
+    this->deserializeCommon(in);
+    
+    int categoriesIdCount;
+    in.read(reinterpret_cast<char*>(&categoriesIdCount), sizeof(categoriesIdCount));
+
+    for (int i = 0; i < categoriesIdCount; i++) {
+        in.read(reinterpret_cast<char*>(&categoriesIdCount), sizeof(categoriesIdCount));
+    }
 }
