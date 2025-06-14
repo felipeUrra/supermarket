@@ -47,7 +47,7 @@ const CustomString Worker::getRoleAsString() const {
 // Serialize-deserialize
 void Worker::serializeCommon(std::ofstream& out) const {
     int valueRole = static_cast<int>(this->role);
-    out.write(reinterpret_cast<const char*>(&this->role), sizeof(this->role));
+    out.write(reinterpret_cast<const char*>(&valueRole), sizeof(valueRole));
 
     out.write(reinterpret_cast<const char*>(&this->id), sizeof(this->id));
     
@@ -61,9 +61,9 @@ void Worker::serializeCommon(std::ofstream& out) const {
 }
 
 void Worker::deserializeCommon(std::ifstream& in) {
-    int valueRole;
-    in.read(reinterpret_cast<char*>(&valueRole), sizeof(valueRole));
-    this->role = static_cast<Role>(valueRole);
+    //int valueRole;
+    //in.read(reinterpret_cast<char*>(&valueRole), sizeof(valueRole));
+    //this->role = static_cast<Role>(valueRole);
 
     in.read(reinterpret_cast<char*>(&this->id), sizeof(this->id));
 

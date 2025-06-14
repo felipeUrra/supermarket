@@ -43,8 +43,8 @@ void Cashier::deserialize(std::ifstream& in) {
 
     int warningsCount;
     in.read(reinterpret_cast<char*>(&warningsCount), sizeof(warningsCount));
-    this->warnings.clear();
-    for (size_t i = 0; i < warningsCount; i++) {
+    //this->warnings.clear();
+    for (int i = 0; i < warningsCount; i++) {
         Warning* w = new Warning();
         w->deserialize(in);
         warnings.push_back(w);
