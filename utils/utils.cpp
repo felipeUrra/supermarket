@@ -56,3 +56,29 @@ bool Utils::isValidPhoneNumber(const CustomString& phoneNumber) {
     // TODO implement
     return true;
 }
+
+void Utils::saveSystemState(const System& system, const CustomString& filename) {
+    const char* fn = filename.c_str();
+
+    std::ofstream out(fn, std::ios::binary);
+    if (!out.is_open()) {
+        std::cerr << "Could not open file for writing: " << filename << "\n";
+        return;
+    }
+
+    system.serialize(out);
+    out.close();
+}
+
+void Utils::loadSystemState(System& system, const CustomString& filename) {
+    const char* fn = filename.c_str();
+
+    std::ifstream in(fn, std::ios::binary);
+    if (!in.is_open()) {
+        std::cerr << "Could not open file for reading: " << filename << "\n";
+        return;
+    }
+
+    system.deserialize(in);
+    in.close();
+}
