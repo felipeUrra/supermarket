@@ -29,6 +29,7 @@ public:
     CustomVector<Product*>& getProductsList();
     CustomVector<GiftCard*>& getGiftCardsList();
     void addCategory(Category* category);
+    Category* getCategoryByName(const CustomString& name) const;
 
     // Serialize-deserialize
     void serialize(std::ofstream& out) const;

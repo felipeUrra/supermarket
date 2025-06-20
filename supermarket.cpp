@@ -90,3 +90,12 @@ void Supermarket::deserialize(std::ifstream& in) {
         this->pendingList.push_back(c);
     }
 }
+
+Category* Supermarket::getCategoryByName(const CustomString& name) const {
+    for (int i = 0; i < this->categoriesList.getSize(); i++) {
+        if (this->categoriesList[i]->getName() == name) {
+            return this->categoriesList[i];
+        }
+    }
+    return nullptr;
+}
