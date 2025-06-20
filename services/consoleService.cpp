@@ -40,6 +40,12 @@ void ConsoleService::detectCommand(Worker*& loggedUser, Supermarket* supermarket
         ManagerCommands::declineCashier(supermarket, loggedUser);
     } else if (cmd == "list-pending") {
         ManagerCommands::listPending(supermarket, loggedUser);
+    } else if (cmd == "load-gift-cards") {
+        ManagerCommands::loadGiftCards(supermarket, loggedUser);
+    } else if (cmd == "add-product") {
+        ManagerCommands::addProduct(supermarket, loggedUser);
+    } else if (cmd == "sell") {
+        ManagerCommands::sell(supermarket, loggedUser);
     }
     else {
         ConsoleService::printLine("Unknown command: " + cmd);
