@@ -174,6 +174,7 @@ CustomString CustomString::substr(size_t begin, size_t howMany) const
 
 	CustomString toReturn(howMany);
 	strncat(toReturn.data, this->data + begin, howMany);
+	toReturn.size = strlen(toReturn.data);
 	return toReturn;
 }
 
@@ -279,4 +280,85 @@ void CustomString::free()
 
 	this->data = nullptr;
 	this->size = this->capacity = 0;
+}
+
+size_t CustomString::indexOf(char c, size_t startPos) const
+{
+	for (size_t i = startPos; i < this->size; i++)
+	{
+		if (this->data[i] == c)
+		{
+			return i;
+		}
+	}
+
+	return npos;
+}
+
+double CustomString::toDouble() const
+{
+	double result = 0.0;
+	bool isNegative = false;
+	size_t i = 0;
+
+	if (this->data[0] == '-') {
+		isNegative = true;
+		i++;
+	}
+
+	for (; i < this->size; i++) {
+		if (this->data[i] < '0' || this->data[i] > '9') {
+			throw std::invalid_argument("Invalid character in string for conversion to double");
+		}
+		result = result * 10 + (this->data[i] - '0');
+	}
+
+	return isNegative ? -result : result;
+}
+
+int CustomString::toInt() const
+{
+	int result = 0;
+	bool isNegative = false;
+	size_t i = 0;
+
+	if (this->data[0] == '-') {
+		isNegative = true;
+		i++;
+	}
+
+	for (; i < this->size; i++) {
+		if (this->data[i] < '0' || this->data[i] > '9') {
+			throw std::invalid_argument("Invalid character in string for conversion to int");
+		}
+		result = result * 10 + (this->data[i] - '0');
+	}
+
+	return isNegative ? -result : result;
+}
+
+CustomVector<CustomString> CustomString::split(char delimiter) const
+{
+	CustomVector<CustomString> result;
+	size_t start = 0;
+
+	for (size_t i = 0; i < this->size; i++) {
+		if (this->data[i] == delimiter) {
+			if (i > start) {
+				result.push_back(this->substr(start, i - start));
+			}
+			start = i + 1;
+		}
+	}
+
+	if (start < this->size) {
+		result.push_back(this->substr(start, this->size - start));
+	}
+
+	return result;
+}
+
+bool CustomString::isEmpty() const
+{
+	return this->size == 0;
 }

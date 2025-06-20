@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <fstream>
+#include "customVector.h"
 
 namespace Constants
 {
@@ -28,6 +29,7 @@ private:
 	void free();
 
 public:
+	static const int npos = -1;
 	CustomString();
 	CustomString(const char* data);
 
@@ -66,6 +68,11 @@ public:
 
 	friend std::istream& operator>>(std::istream& is, CustomString& other);
 	friend std::ostream& operator<<(std::ostream& os, const CustomString& other);
+	size_t indexOf(char c, size_t startPos = 0) const;
+	double toDouble() const;
+	int toInt() const;
+	CustomVector<CustomString> split(char delimiter) const;
+	bool isEmpty() const;
 
 	~CustomString();
 };
