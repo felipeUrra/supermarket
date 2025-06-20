@@ -7,16 +7,16 @@
 
 class SingleCategoryGiftCard : public GiftCard {
 private:
-    int categoryId;
+    CustomString category;
 
 public:
     SingleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerato);
-    SingleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount, int categoryId);
+    SingleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount, CustomString category);
     ~SingleCategoryGiftCard() = default;
 
     // Getters and setters
-    int getCategoryId() const;
-    void setCategoryId(int category);
+    CustomString getCategory() const;
+    void setCategory(CustomString category);
 
     // Serialize-deserialize
     void serialize(std::ofstream& out) const override;

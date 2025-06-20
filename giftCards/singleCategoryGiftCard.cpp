@@ -7,24 +7,24 @@
 SingleCategoryGiftCard::SingleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator) :
     GiftCard(randomNumberGenerator, idGenerator) {}
 
-SingleCategoryGiftCard::SingleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount, int categoryId) :
+SingleCategoryGiftCard::SingleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount, CustomString category) :
     GiftCard(randomNumberGenerator, idGenerator , GiftCardType::SingleCategory, discount),
-    categoryId(categoryId) {}
+    category(category) {}
 
 
 //getters and setters
-int SingleCategoryGiftCard::getCategoryId() const {return this->categoryId;}
-void SingleCategoryGiftCard::setCategoryId(int categoryId) {this->categoryId = categoryId;}
+CustomString SingleCategoryGiftCard::getCategory() const {return this->category;}
+void SingleCategoryGiftCard::setCategory(CustomString category) {this->category = category;}
 
 // Serialize-deserialize
 void SingleCategoryGiftCard::serialize(std::ofstream& out) const {
     this->serializeCommon(out);
 
-    out.write(reinterpret_cast<const char*>(&this->categoryId), sizeof(this->categoryId));
+    out.write(reinterpret_cast<const char*>(&this->category), sizeof(this->category));
 }
 
 void SingleCategoryGiftCard::deserialize(std::ifstream& in) {
     this->deserializeCommon(in);
 
-    in.read(reinterpret_cast<char*>(&this->categoryId), sizeof(this->categoryId));
+    in.read(reinterpret_cast<char*>(&this->category), sizeof(this->category));
 }

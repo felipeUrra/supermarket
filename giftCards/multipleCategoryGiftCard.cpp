@@ -7,26 +7,26 @@
 MultipleCategoryGiftCard::MultipleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator) :
     GiftCard(randomNumberGenerator, idGenerator) {}
 
-MultipleCategoryGiftCard::MultipleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount, CustomVector<int>& categoriesId) :
+MultipleCategoryGiftCard::MultipleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount, CustomVector<CustomString>& categories) :
     GiftCard(randomNumberGenerator, idGenerator, GiftCardType::MultipleCategories, discount),
-    categoriesId(categoriesId) {}
+    categories(categories) {}
 
 
 //getters and setters
-CustomVector<int>& MultipleCategoryGiftCard::getCategoriesId() {return this->categoriesId;}
-void MultipleCategoryGiftCard::setCategoriesId(CustomVector<int>& categoriesId) {
-    this->categoriesId = categoriesId;
+CustomVector<CustomString>& MultipleCategoryGiftCard::getCategories() {return this->categories;}
+void MultipleCategoryGiftCard::setCategories(CustomVector<CustomString>& categories) {
+    this->categories = categories;
 }
 
 // Serialize-deserialize
 void MultipleCategoryGiftCard::serialize(std::ofstream& out) const {
     this->serializeCommon(out);
 
-    int categoriesIdCount = this->categoriesId.getSize();
+    int categoriesIdCount = this->categories.getSize();
     out.write(reinterpret_cast<const char*>(&categoriesIdCount), sizeof(categoriesIdCount));
 
     for (int i = 0; i < categoriesIdCount; i++) {
-        out.write(reinterpret_cast<const char*>(&this->categoriesId[i]), sizeof(this->categoriesId[i]));
+        out.write(reinterpret_cast<const char*>(&this->categories[i]), sizeof(this->categories[i]));
     }
 }
 
