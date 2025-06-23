@@ -3,3 +3,4 @@ main
 *.bin
 compile.bat
 bin/supermarket_app_debug.exe
+*.txt
