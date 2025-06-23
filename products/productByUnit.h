@@ -11,7 +11,7 @@ private:
 
 public:
     ProductByUnit();
-    ProductByUnit(const CustomString& name, Category* category, double price, int availableAmount);
+    ProductByUnit(const CustomString& name, const CustomString& categoryName, double price, int availableAmount);
     ~ProductByUnit() = default;
 
     //getters and setters

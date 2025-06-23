@@ -5,6 +5,9 @@
 #include "consoleService.h"
 #include "../utils/utils.h"
 #include "../commands/managerCommands.h"
+#include "../commands/cashierCommands.h"
+#include "../products/productByUnit.h"
+#include "../products/productByWeight.h"
 
 CustomString ConsoleService::cmd = "";
 
@@ -45,7 +48,7 @@ void ConsoleService::detectCommand(Worker*& loggedUser, Supermarket* supermarket
     } else if (cmd == "add-product") {
         ManagerCommands::addProduct(supermarket, loggedUser);
     } else if (cmd == "sell") {
-        ManagerCommands::sell(supermarket, loggedUser);
+        CashierCommands::sell(supermarket, loggedUser);
     }
     else {
         ConsoleService::printLine("Unknown command: " + cmd);
@@ -58,6 +61,29 @@ void ConsoleService::printLine(const CustomString& str) {
     std::cout << str << std::endl;
 }
 
+void ConsoleService::print(const CustomString& str) {
+    std::cout << str;
+}
+
 void ConsoleService::discardInput() {
     std::cin.ignore(10000, '\n');
+}
+
+void ConsoleService::printProductsList(Supermarket* supermarket) {
+    if (supermarket->getProductsList().isEmpty()) {
+        ConsoleService::printLine("No products available for sale.");
+        return;
+    }
+    ConsoleService::printLine("Products:");
+    for (int i = 0; i < supermarket->getProductsList().getSize(); i++) {
+        Product* product = supermarket->getProductsList()[i];
+
+        if (auto* byUnit = dynamic_cast<ProductByUnit*>(product)) {
+            std::cout << (i + 1) << ". " << product->getName() << " : "
+                    << byUnit->getPrice() << " : " << byUnit->getAvailableAmount() << "\n";
+        } else if (auto* byWeight = dynamic_cast<ProductByWeight*>(product)) {
+            std::cout << (i + 1) << ". " << product->getName() << " : "
+                    << byWeight->getPrice() << "/kg : " << byWeight->getAvailableKg() << "\n";
+        }
+    }
 }

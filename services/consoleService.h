@@ -27,7 +27,10 @@ public:
     static void detectCommand(Worker*& loggedUser, Supermarket* supermarket, bool& exit);
 
     static void printLine(const CustomString& str);
+    static void print(const CustomString& str);
     static void discardInput();
+
+    static void printProductsList(Supermarket* supermarket);
 };
 
 template <>
@@ -35,6 +38,13 @@ inline int ConsoleService::readData<int>() {
     int var;
     std::cin >> var;
     return var;
+}
+
+template <>
+inline char ConsoleService::readData<char>() {
+    char c;
+    std::cin >> c;
+    return c;
 }
 
 template <>

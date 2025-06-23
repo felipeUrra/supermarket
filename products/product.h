@@ -8,21 +8,21 @@
 class Product {
 private:
     CustomString name;
-    Category* category;
+    CustomString categoryName; // TODO cambiarlo a category name
     double price;
 
 public:
     Product();
-    Product(const CustomString& name, Category* category, double price);
+    Product(const CustomString& name, const CustomString& categoryName, double price);
     virtual ~Product() = 0;
 
     //getters and setters
     const CustomString& getName() const;
-    Category* getCategory();
+    const CustomString& getCategoryName() const;
     double getPrice() const;
 
     void setName(const CustomString& name);
-    void setCategory(Category* category);
+    void setCategoryName(const CustomString& category);
     void setPrice(double);
 };
 

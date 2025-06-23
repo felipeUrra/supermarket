@@ -227,7 +227,7 @@ bool ManagerCommands::getProductCommonData(Supermarket* supermarket, Product* pr
         return false;
     }
     product->setName(productName);
-    product->setCategory(category);
+    product->setCategoryName(category->getName());
     return true;
 }
 
@@ -275,7 +275,7 @@ void ManagerCommands::addProductByUnit(Supermarket* supermarket, Worker* loggedU
     productByUnit->setPrice(pricePerUnit);
     productByUnit->setAvailableAmount(quantity);
     supermarket->getProductsList().push_back(newProduct);
-    ConsoleService::printLine("Product \"" + newProduct->getName() + "\" added successfully under category \"" + newProduct->getCategory()->getName() + "\".");
+    ConsoleService::printLine("Product \"" + newProduct->getName() + "\" added successfully under category \"" + newProduct->getCategoryName() + "\".");
 }
 
 void ManagerCommands::addProductByWeight(Supermarket* supermarket, Worker* loggedUser) {
@@ -312,7 +312,7 @@ void ManagerCommands::addProductByWeight(Supermarket* supermarket, Worker* logge
     productByWeight->setAvailableKg(quantity);
     productByWeight->setPrice(pricePerKg);
     supermarket->getProductsList().push_back(newProduct);
-    ConsoleService::printLine("Product \"" + newProduct->getName() + "\" added successfully under category \"" + newProduct->getCategory()->getName() + "\".");
+    ConsoleService::printLine("Product \"" + newProduct->getName() + "\" added successfully under category \"" + newProduct->getCategoryName() + "\".");
 }
 
 void ManagerCommands::addProduct(Supermarket* supermarket, Worker* loggedUser) {
@@ -330,88 +330,5 @@ void ManagerCommands::addProduct(Supermarket* supermarket, Worker* loggedUser) {
     } else {
         ConsoleService::printLine("Unknown product type: " + productType);
         ConsoleService::discardInput();
-    }
-}
-
-void ManagerCommands::sell(Supermarket* supermarket, Worker* loggedUser) {
-    if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
-        ConsoleService::printLine("You must be logged in as a manager to sell products.");
-        ConsoleService::discardInput();
-        return;
-    }
-
-    // this is how the sell command should work:
-    /*
-    > sell
-        Products:
-        1. Banana : 3.49/kg : 150
-        2. Watermelon : 5.19 : 250
-        3. Kiselo mliako : 2.40 : 1000
-
-        Transaction ID: 1
-        Price: 0.00
-
-        Enter product ID to sell. Enter END to end the transaction:
-        > 3
-        Enter quantity:
-        > 5
-
-        Products:
-        1. Banana : 3.49/kg : 150
-        2. Watermelon : 5.19 : 250
-        3. Kiselo mliako : 2.40 : 995
-
-        Transaction ID: 1
-        Price: 12.00
-
-        Enter product ID to sell. Enter END to end the transaction:
-        > 1
-        Enter quantity:
-        > 3
-
-        Products:
-            1. Banana : 3.49/kg : 147
-            2. Watermelon : 5.19 : 250
-            3. Kiselo mliako : 2.40 : 995
-
-        Transaction ID: 1
-        Price: 22.47
-
-        Enter product ID to sell. Enter END to end the transaction:
-        > END
-
-        Add voucher: (Y/N) ? Y
-        Enter voucher: 3AX001B
-
-        10% applied! Transaction complete!
-
-        Receipt saved as: receipt_00001.txt
-        Total: 20.22 lv.
-    */
-
-    if (supermarket->getProductsList().isEmpty()) {
-        ConsoleService::printLine("No products available for sale.");
-        return;
-    }
-    ConsoleService::printLine("Products:");
-    for (int i = 0; i < supermarket->getProductsList().getSize(); i++) {
-        Product* product = supermarket->getProductsList()[i];
-        CustomString priceStr;
-        CustomString quantityStr;
-
-        if (auto* byUnit = dynamic_cast<ProductByUnit*>(product)) {
-            priceStr = CustomString::valueOf(byUnit->getPrice()) + "/kg";
-            quantityStr = CustomString::valueOf(byUnit->getAvailableAmount());
-        } else if (auto* byWeight = dynamic_cast<ProductByWeight*>(product)) {
-            priceStr = CustomString::valueOf(byWeight->getPrice());
-            quantityStr = CustomString::valueOf(byWeight->getAvailableKg());
-        } else {
-            priceStr = CustomString::valueOf(product->getPrice());
-            quantityStr = "N/A";
-        }
-
-        ConsoleService::printLine(CustomString::valueOf(i + 1) + ". " + product->getName() + " : "
-                                  + priceStr + " : "
-                                  + quantityStr);
     }
 }

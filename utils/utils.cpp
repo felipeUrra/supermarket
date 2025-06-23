@@ -57,6 +57,8 @@ bool Utils::isValidPhoneNumber(const CustomString& phoneNumber) {
     return true;
 }
 
+
+// Serialize-deserialize
 void Utils::saveSystemState(const System& system, const CustomString& filename) {
     const char* fn = filename.c_str();
 

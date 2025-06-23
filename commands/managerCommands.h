@@ -20,5 +20,4 @@ public:
     static void addProductByUnit(Supermarket* supermarket, Worker* loggedUser);
     static void addProductByWeight(Supermarket* supermarket, Worker* loggedUser);
     static void addProduct(Supermarket* Supermarket, Worker* loggedUser);
-    static void sell(Supermarket* supermarket, Worker* loggedUser);
 };

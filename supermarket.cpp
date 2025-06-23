@@ -91,10 +91,28 @@ void Supermarket::deserialize(std::ifstream& in) {
     }
 }
 
-Category* Supermarket::getCategoryByName(const CustomString& name) const {
+Category* Supermarket::getCategoryByName(const CustomString& name) {
     for (int i = 0; i < this->categoriesList.getSize(); i++) {
         if (this->categoriesList[i]->getName() == name) {
             return this->categoriesList[i];
+        }
+    }
+    return nullptr;
+}
+
+GiftCard* Supermarket::getGiftCarByCode(const CustomString& code) {
+    for (int i = 0; i < this->giftCardsList.getSize(); i++) {
+        if (this->giftCardsList[i]->getCode() == code) {
+            return this->giftCardsList[i];
+        }
+    }
+    return nullptr;
+}
+
+Product* Supermarket::getProductByName(const CustomString& name) {
+    for (int i = 0; i < this->productsList.getSize(); i++) {
+        if (this->productsList[i]->getName() == name) {
+            return this->productsList[i];
         }
     }
     return nullptr;

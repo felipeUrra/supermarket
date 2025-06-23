@@ -6,32 +6,41 @@
 #include "workers/cashier.h"
 #include "products/product.h"
 #include "customFunctions/customVector.h"
+#include "supermarket.h"
+#include "giftCards/giftCard.h"
 
 class Transaction {
 private:
-    Cashier* cashier;
+    int cashierId;
     double total;
     CustomString date;
     CustomString time;
     int id;
-    CustomVector<Product*> products;
+    CustomVector<CustomString> productsName;
+    CustomVector<double> prices;
+    CustomVector<double> quantities;
+    // TODO vector que tenga las cantidades de un producto
 
 
     void setActualDateAndTime(); // maybe put it in a class for Utils
 
 public:
     Transaction(IdGenerator& idGenerator);
-    Transaction(IdGenerator& idGenerator, Cashier* cashier, double total);
+    Transaction(IdGenerator& idGenerator, int cashierId, double total);
     ~Transaction() = default;
 
     //getters and setters
-    Cashier* getCashier();
+    int getCashierId();
     double getTotal() const;
     const CustomString& getDate() const;
     const CustomString& getTime() const;
     int getId() const;
-    CustomVector<Product*>& getProducts();
+    CustomVector<CustomString>& getProductsName();
+    CustomVector<double>& getPrices();
+    CustomVector<double>& getQuantities();
 
-    void setCashier(Cashier* cashier);
+    void setCashierId(int cashierId);
     void setTotal(double total);
+
+    void applyGiftCard(GiftCard* gc, Supermarket* supermarket);
 };

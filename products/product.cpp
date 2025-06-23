@@ -6,18 +6,18 @@
 
 Product::Product() : name(""), price(0) {}
 
-Product::Product(const CustomString& name, Category* category, double price) :
+Product::Product(const CustomString& name, const CustomString& categoryName, double price) :
     name(name),
-    category(category),
+    categoryName(categoryName),
     price(price) {}
 
 Product::~Product() {};
 
 //getters and setters
 const CustomString& Product::getName() const {return this->name;}
-Category* Product::getCategory() {return this->category;}
+const CustomString& Product::getCategoryName() const{return this->categoryName;}
 double Product::getPrice() const {return this->price;}
 
 void Product::setName(const CustomString& name) {this->name = name;}
-void Product::setCategory(Category* category) {this->category = category;}
-void Product::setPrice(double) {this->price = price;}
+void Product::setCategoryName(const CustomString& categoryName) {this->categoryName = categoryName;}
+void Product::setPrice(double price) {this->price = price;}

@@ -6,8 +6,8 @@
 
 ProductByUnit::ProductByUnit() : Product(), availableAmount(0) {}
 
-ProductByUnit::ProductByUnit(const CustomString& name, Category* category, double price, int availableAmount) :
-    Product(name, category, price),
+ProductByUnit::ProductByUnit(const CustomString& name, const CustomString& categoryName, double price, int availableAmount) :
+    Product(name, categoryName, price),
     availableAmount(availableAmount) {}
 
 int ProductByUnit::getAvailableAmount() const {return this->availableAmount;}

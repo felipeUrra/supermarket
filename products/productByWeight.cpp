@@ -6,8 +6,8 @@
 
 ProductByWeight::ProductByWeight() : Product(), availableKg(0) {}
 
-ProductByWeight::ProductByWeight(const CustomString& name, Category* category, double price, double availableKg) :
-    Product(name, category, price),
+ProductByWeight::ProductByWeight(const CustomString& name, const CustomString& categoryName, double price, double availableKg) :
+    Product(name, categoryName, price),
     availableKg(availableKg) {}
 
 double ProductByWeight::getAvailableKg() const {return this->availableKg;}

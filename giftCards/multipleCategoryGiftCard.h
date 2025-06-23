@@ -8,16 +8,16 @@
 
 class MultipleCategoryGiftCard : public GiftCard {
 private:
-    CustomVector<CustomString> categories;
+    CustomVector<CustomString> categoriesNames;
 
 public:
     MultipleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator);
-    MultipleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount, CustomVector<CustomString>& categories);
+    MultipleCategoryGiftCard(RandomNumberGenerator& randomNumberGenerator, IdGenerator& idGenerator, double discount, CustomVector<CustomString>& categoriesNames);
     ~MultipleCategoryGiftCard() = default;
 
     //getters and setters
-    CustomVector<CustomString>& getCategories();
-    void setCategories(CustomVector<CustomString>& categories);
+    CustomVector<CustomString>& getCategoriesNames();
+    void setCategoriesNames(CustomVector<CustomString>& categoriesNames);
 
     // Serialize-deserialize
     void serialize(std::ofstream& out) const override;

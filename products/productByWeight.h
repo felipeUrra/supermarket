@@ -11,7 +11,7 @@ private:
 
 public:
     ProductByWeight();
-    ProductByWeight(const CustomString& name, Category* category, double price, double availableKg);
+    ProductByWeight(const CustomString& name, const CustomString& categoryName, double price, double availableKg);
     ~ProductByWeight() = default;
 
     //getters and setters
