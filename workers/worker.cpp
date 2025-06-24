@@ -61,10 +61,6 @@ void Worker::serializeCommon(std::ofstream& out) const {
 }
 
 void Worker::deserializeCommon(std::ifstream& in) {
-    //int valueRole;
-    //in.read(reinterpret_cast<char*>(&valueRole), sizeof(valueRole));
-    //this->role = static_cast<Role>(valueRole);
-
     in.read(reinterpret_cast<char*>(&this->id), sizeof(this->id));
 
     this->name.deserialize(in);

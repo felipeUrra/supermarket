@@ -54,10 +54,6 @@ void GiftCard::serializeCommon(std::ofstream& out) const {
 }
 
 void GiftCard::deserializeCommon(std::ifstream& in) {
-    int typeValue;
-    in.read(reinterpret_cast<char*>(&typeValue), sizeof(typeValue));
-    this->type = static_cast<GiftCardType>(typeValue);
-
     this->code.deserialize(in);
 
     in.read(reinterpret_cast<char*>(&this->discount), sizeof(this->discount));

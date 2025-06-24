@@ -18,13 +18,13 @@
 
 void ManagerCommands::approveCashier(Supermarket* supermarket, Worker* loggedUser) {
     if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
-        ConsoleService::printLine("You must be logged in as a manager to approve cashiers.");
+        ConsoleService::printLine("You must be logged in as a manager to approve cashiers.\n");
         ConsoleService::discardInput();
         return;
     }
 
     if (supermarket->getPendingList().isEmpty()) {
-        ConsoleService::printLine("No pending cashiers to approve.");
+        ConsoleService::printLine("No pending cashiers to approve.\n");
         ConsoleService::discardInput();
         return;
     }
@@ -34,7 +34,7 @@ void ManagerCommands::approveCashier(Supermarket* supermarket, Worker* loggedUse
     
     Manager* manager = dynamic_cast<Manager*>(loggedUser);
     if (!manager || specialCode != manager->getSpecialCode()) {
-        ConsoleService::printLine("Invalid special code. You cannot approve cashiers.");
+        ConsoleService::printLine("Invalid special code. You cannot approve cashiers.\n");
         return;
     }
 
@@ -43,16 +43,16 @@ void ManagerCommands::approveCashier(Supermarket* supermarket, Worker* loggedUse
         if (cashier->getId() == idCashier) {
             supermarket->addWorker(cashier);
             supermarket->getPendingList().remove(i);
-            ConsoleService::printLine("Cashier approved successfully!");
+            ConsoleService::printLine("Cashier approved successfully!\n");
             return;
         }
     }
-    ConsoleService::printLine("Cashier not found in pending list.");
+    ConsoleService::printLine("Cashier not found in pending list.\n");
 }
 
 void ManagerCommands::declineCashier(Supermarket* supermarket, Worker* loggedUser) {
     if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
-        ConsoleService::printLine("You must be logged in as a manager to add categories.");
+        ConsoleService::printLine("You must be logged in as a manager to decline cashiers.\n");
         ConsoleService::discardInput();
         return;
     }
@@ -84,7 +84,7 @@ void ManagerCommands::declineCashier(Supermarket* supermarket, Worker* loggedUse
 
 void ManagerCommands::addCategory(Supermarket* supermarket, Worker* loggedUser) {
     if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
-        ConsoleService::printLine("You must be logged in as a manager to add categories.");
+        ConsoleService::printLine("You must be logged in as a manager to add categories.\n");
         ConsoleService::discardInput();
         return;
     }
@@ -92,24 +92,29 @@ void ManagerCommands::addCategory(Supermarket* supermarket, Worker* loggedUser) 
     const CustomString categoryName = ConsoleService::readData<CustomString>();
     const CustomString description = ConsoleService::readData<CustomString>();
     if (categoryName == "") {
-        ConsoleService::printLine("Category name cannot be empty.");
+        ConsoleService::printLine("Category name cannot be empty.\n");
+        return;
+    }
+
+    if (supermarket->getCategoryByName(categoryName) != nullptr) {
+        ConsoleService::printLine("There is already a category with that name\n");
         return;
     }
 
     Category* newCategory = new Category(IdGenerator::getInstance(), categoryName, description);
     supermarket->addCategory(newCategory);
-    ConsoleService::printLine("Category \"" + categoryName + "\" added successfully!");
+    ConsoleService::printLine("Category \"" + categoryName + "\" added successfully!\n");
 }
 
 void ManagerCommands::listPending(Supermarket* supermarket, Worker* loggedUser) {
     if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
-        ConsoleService::printLine("You must be logged in as a manager to add categories.");
+        ConsoleService::printLine("You must be logged in as a manager to add categories.\n");
         ConsoleService::discardInput();
         return;
     }
 
     if (supermarket->getPendingList().isEmpty()) {
-        ConsoleService::printLine("No pending cashiers.");
+        ConsoleService::printLine("No pending cashiers.\n");
         ConsoleService::discardInput();
         return;
     }
@@ -122,11 +127,18 @@ void ManagerCommands::listPending(Supermarket* supermarket, Worker* loggedUser) 
         + " phone number: " + supermarket->getPendingList()[i]->getPhoneNumber()
         + " password: " + supermarket->getPendingList()[i]->getPassword());
     }
+
+    ConsoleService::printLine("");
 }
+
+void ManagerCommands::listWarnedCashier(Supermarket* supermarket, Worker* loggedUser) {return;}
+void ManagerCommands::warnCashier(Supermarket* supermarket, Worker* loggedUser) {return;}
+void ManagerCommands::fireCashier(Supermarket* supermarket, Worker* loggedUser) {return;}
+void ManagerCommands::promoteCashier(Supermarket* supermarket, Worker* loggedUser) {return;}
 
 void ManagerCommands::loadGiftCards(Supermarket* supermarket, Worker* loggedUser) {
     if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
-        ConsoleService::printLine("You must be logged in as a manager to load gift cards.");
+        ConsoleService::printLine("You must be logged in as a manager to load gift cards.\n");
         ConsoleService::discardInput();
         return;
     }
@@ -208,22 +220,26 @@ void ManagerCommands::loadGiftCards(Supermarket* supermarket, Worker* loggedUser
 
 }
 
+void ManagerCommands::loadProducts(Supermarket* supermarket, Worker* loggedUser) {return;}
+
 bool ManagerCommands::getProductCommonData(Supermarket* supermarket, Product* product) {
     ConsoleService::printLine("Enter product name: ");
     CustomString productName = ConsoleService::readData<CustomString>();
     if (productName.isEmpty()) {
-        ConsoleService::printLine("Product name cannot be empty.");
+        ConsoleService::printLine("Product's name cannot be empty.\n");
         return false;
+    } else if (supermarket->getProductByName(productName) != nullptr) {
+        ConsoleService::printLine("Product's name must be unique.\n");
     }
     ConsoleService::printLine("Enter product category: ");
     CustomString categoryName = ConsoleService::readData<CustomString>();
     if (categoryName.isEmpty()) {
-        ConsoleService::printLine("Category name cannot be empty.");
+        ConsoleService::printLine("Category name cannot be empty.\n");
         return false;
     }
     Category* category = supermarket->getCategoryByName(categoryName);
     if (category == nullptr) {
-        ConsoleService::printLine("Category \"" + categoryName + "\" does not exist.");
+        ConsoleService::printLine("Category \"" + categoryName + "\" does not exist.\n");
         return false;
     }
     product->setName(productName);
@@ -243,7 +259,7 @@ Add product, here is an example of how it should show to the user:
 void ManagerCommands::addProductByUnit(Supermarket* supermarket, Worker* loggedUser) {
 
     if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
-        ConsoleService::printLine("You must be logged in as a manager to add products.");
+        ConsoleService::printLine("You must be logged in as a manager to add products.\n");
         ConsoleService::discardInput();
         return;
     }
@@ -257,30 +273,30 @@ void ManagerCommands::addProductByUnit(Supermarket* supermarket, Worker* loggedU
     ConsoleService::printLine("Enter price per unit: ");
     double pricePerUnit = ConsoleService::readData<double>();
     if (pricePerUnit <= 0) {
-        ConsoleService::printLine("Price per unit must be greater than zero.");
+        ConsoleService::printLine("Price per unit must be greater than zero.\n");
         return;
     }
     ConsoleService::printLine("Enter quantity (units): ");
     int quantity = ConsoleService::readData<int>();
     if (quantity <= 0) {
-        ConsoleService::printLine("Quantity must be greater than zero.");
+        ConsoleService::printLine("Quantity must be greater than zero.\n");
         return;
     }
     ProductByUnit* productByUnit = dynamic_cast<ProductByUnit*>(newProduct);
     if (productByUnit == nullptr) {
-        ConsoleService::printLine("Error: Product is not of type ProductByUnit.");
+        ConsoleService::printLine("Error: Product is not of type ProductByUnit.\n");
         delete newProduct;
         return;
     }
     productByUnit->setPrice(pricePerUnit);
     productByUnit->setAvailableAmount(quantity);
     supermarket->getProductsList().push_back(newProduct);
-    ConsoleService::printLine("Product \"" + newProduct->getName() + "\" added successfully under category \"" + newProduct->getCategoryName() + "\".");
+    ConsoleService::printLine("Product \"" + newProduct->getName() + "\" added successfully under category \"" + newProduct->getCategoryName() + "\".\n");
 }
 
 void ManagerCommands::addProductByWeight(Supermarket* supermarket, Worker* loggedUser) {
     if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
-        ConsoleService::printLine("You must be logged in as a manager to add products.");
+        ConsoleService::printLine("You must be logged in as a manager to add products.\n");
         ConsoleService::discardInput();
         return;
     }
@@ -294,30 +310,30 @@ void ManagerCommands::addProductByWeight(Supermarket* supermarket, Worker* logge
     ConsoleService::printLine("Enter price per kilogram: ");
     double pricePerKg = ConsoleService::readData<double>();
     if (pricePerKg <= 0) {
-        ConsoleService::printLine("Price per kilogram must be greater than zero.");
+        ConsoleService::printLine("Price per kilogram must be greater than zero.\n");
         return;
     }
     ConsoleService::printLine("Enter quantity (kilograms): ");
     int quantity = ConsoleService::readData<int>();
     if (quantity <= 0) {
-        ConsoleService::printLine("Quantity must be greater than zero.");
+        ConsoleService::printLine("Quantity must be greater than zero.\n");
         return;
     }
     ProductByWeight* productByWeight = dynamic_cast<ProductByWeight*>(newProduct);
     if (productByWeight == nullptr) {
-        ConsoleService::printLine("Error: Product is not of type ProductByWeight.");
+        ConsoleService::printLine("Error: Product is not of type ProductByWeight.\n");
         delete newProduct;
         return;
     }
     productByWeight->setAvailableKg(quantity);
     productByWeight->setPrice(pricePerKg);
     supermarket->getProductsList().push_back(newProduct);
-    ConsoleService::printLine("Product \"" + newProduct->getName() + "\" added successfully under category \"" + newProduct->getCategoryName() + "\".");
+    ConsoleService::printLine("Product \"" + newProduct->getName() + "\" added successfully under category \"" + newProduct->getCategoryName() + "\".\n");
 }
 
 void ManagerCommands::addProduct(Supermarket* supermarket, Worker* loggedUser) {
     if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
-        ConsoleService::printLine("You must be logged in as a manager to add products.");
+        ConsoleService::printLine("You must be logged in as a manager to add products.\n");
         ConsoleService::discardInput();
         return;
     }
@@ -328,7 +344,9 @@ void ManagerCommands::addProduct(Supermarket* supermarket, Worker* loggedUser) {
     } else if (productType == "product_by_weight") {
         addProductByWeight(supermarket, loggedUser);
     } else {
-        ConsoleService::printLine("Unknown product type: " + productType);
+        ConsoleService::printLine("Unknown product type: " + productType + "\n");
         ConsoleService::discardInput();
     }
 }
+
+void ManagerCommands::deleteCategory(Supermarket* supermarket, Worker* loggedUser) {return;}

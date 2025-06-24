@@ -71,6 +71,7 @@ void CashierCommands::sell(Supermarket* supermarket, Worker* loggedUser) {
     */
 
     Transaction* transaction = new Transaction(IdGenerator::getInstance());
+    supermarket->getTransactionsList().push_back(transaction);
 
     ConsoleService::printProductsList(supermarket);
     ConsoleService::printLine("");
@@ -83,6 +84,8 @@ void CashierCommands::sell(Supermarket* supermarket, Worker* loggedUser) {
         ConsoleService::printLine("Enter product ID to sell. Enter END to end the transaction:");
         std::cout << "> ";
         input = ConsoleService::readData<CustomString>();
+
+        if (input == "END") break;
     } while (input.toInt() > supermarket->getProductsList().getSize() || input.toInt() <= 0);
 
     while (input != "END") {
@@ -110,7 +113,7 @@ void CashierCommands::sell(Supermarket* supermarket, Worker* loggedUser) {
             if (quantity > byWeight->getAvailableKg()) {
                 ConsoleService::printLine("Theres isn't enough product!");
             } else {
-                byWeight->setAvailableKg(byUnit->getAvailableAmount() - quantity);
+                byWeight->setAvailableKg(byWeight->getAvailableKg() - quantity);
 
                 transaction->setCashierId(c->getId());
                 transaction->setTotal(transaction->getTotal() + (byWeight->getPrice() * quantity));
@@ -120,6 +123,7 @@ void CashierCommands::sell(Supermarket* supermarket, Worker* loggedUser) {
             }
         }
 
+        ConsoleService::printLine("-----------------\n");
         ConsoleService::printProductsList(supermarket);
         ConsoleService::printLine("");
         ConsoleService::printLine("Transaction ID: " + CustomString::valueOf(transaction->getId()));
@@ -129,6 +133,7 @@ void CashierCommands::sell(Supermarket* supermarket, Worker* loggedUser) {
             ConsoleService::printLine("Enter product ID to sell. Enter END to end the transaction:");
             std::cout << "> ";
             input = ConsoleService::readData<CustomString>();
+            if (input == "END") break;
         } while (input.toInt() > supermarket->getProductsList().getSize() || input.toInt() <= 0);
     }
 
@@ -141,12 +146,12 @@ void CashierCommands::sell(Supermarket* supermarket, Worker* loggedUser) {
 
         GiftCard* gc = supermarket->getGiftCarByCode(voucherCode);
         if (gc == nullptr) {
-            ConsoleService::printLine("There is no voucher with that id");
+            ConsoleService::printLine("There is no voucher with that id!");
         } else {
             transaction->applyGiftCard(gc, supermarket);
         }
     }
     
     FileService::createReceipt(transaction);
-    std::cout << "Total: " << transaction->getTotal() << "lv. \n";
+    std::cout << "Total: " << transaction->getTotal() << "lv. \n\n";
 }

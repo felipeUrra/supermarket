@@ -14,7 +14,11 @@ public:
     ProductByWeight(const CustomString& name, const CustomString& categoryName, double price, double availableKg);
     ~ProductByWeight() = default;
 
-    //getters and setters
+    // getters and setters
     double getAvailableKg() const;
     void setAvailableKg(double availableKg);
+
+    // Serialize-deserialize
+    void serialize(std::ofstream& out) const override;
+    void deserialize(std::ifstream& in);
 };

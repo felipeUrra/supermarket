@@ -5,6 +5,7 @@
 #pragma once
 #include "../transaction.h"
 #include "../supermarket.h"
+#include "../customFunctions/customString.h"
 
 class FileService {
 public:
@@ -12,4 +13,5 @@ public:
     virtual ~FileService() = default;
 
     static void createReceipt(Transaction* transaction);
+    static void createSpecialCodeFile(int id, const CustomString& code);
 };

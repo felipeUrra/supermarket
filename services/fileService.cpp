@@ -3,7 +3,6 @@
 // OOP(practice) - 2024-2025
 
 #include "fileService.h"
-#include "../customFunctions/customString.h"
 #include "consoleService.h"
 #include <iostream>
 #include <fstream>
@@ -35,6 +34,24 @@ void FileService::createReceipt(Transaction* transaction) {
     }
     
     receipt << "TOTAL:" << transaction->getTotal();
+    receipt.close();
 
     ConsoleService::printLine("Receipt saved as: " + str);
+}
+
+void FileService::createSpecialCodeFile(int id, const CustomString& code) {
+    CustomString str = CustomString::valueOf(id) + "_special_code.txt";
+    const char* filename = str.c_str();
+
+    std::ofstream file(filename);
+
+    if (!file.is_open()) {
+        std::cerr << "It was not possible to open the file" << std::endl;
+        return;
+    }
+
+    file << code;
+    file.close();
+
+    ConsoleService::printLine("Code: " + str + '\n');
 }

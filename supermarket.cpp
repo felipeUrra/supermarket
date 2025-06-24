@@ -10,6 +10,7 @@
 #include "giftCards/singleCategoryGiftCard.h"
 #include "giftCards/multipleCategoryGiftCard.h"
 #include "giftCards/allProductsGiftCard.h"
+#include "transaction.h"
 #include <iostream>
 
 void Supermarket::addCashier(Cashier* cashier) {

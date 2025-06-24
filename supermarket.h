@@ -9,7 +9,8 @@
 #include "feed.h"
 #include "giftCards/giftCard.h"
 #include "products/product.h"
-#include "transaction.h"
+
+class Transaction;
 
 class Supermarket {
 private:

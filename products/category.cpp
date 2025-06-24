@@ -11,10 +11,23 @@ Category::Category(IdGenerator& idGenerator, const CustomString name, const Cust
     description(description),
     id(idGenerator.getCategoryId()) {}
 
-//getters and setters
-    const CustomString& Category::getName() const {return name;}
-    const CustomString& Category::getDescription() const {return description;}
-    int Category::getId() const {return id;}
+// getters and setters
+const CustomString& Category::getName() const {return name;}
+const CustomString& Category::getDescription() const {return description;}
+int Category::getId() const {return id;}
 
-    void Category::setName(const CustomString& name) {this->name = name;}
-    void Category::setDescription(const CustomString& description) {this->description = description;}
+void Category::setName(const CustomString& name) {this->name = name;}
+void Category::setDescription(const CustomString& description) {this->description = description;}
+
+// Serialize-deserialize
+void Category::serialize(std::ofstream& out) const {
+    name.serialize(out);
+    description.serialize(out);
+    out.write(reinterpret_cast<const char*>(&this->id), sizeof(this->id));
+}
+
+void Category::deserialize(std::ifstream& in) {
+    name.deserialize(in);
+    description.deserialize(in);
+    in.read(reinterpret_cast<char*>(&this->id), sizeof(this->id));
+}

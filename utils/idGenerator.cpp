@@ -20,3 +20,18 @@ void IdGenerator::setWorkerId(int workerId) {this->workerId = workerId;}
 void IdGenerator::setTransactionId(int transactionId) {this->transactionId = transactionId;}
 void IdGenerator::setCategoryId(int categoryId) {this->categoryId = categoryId;}
 void IdGenerator::setGiftCardCounter(int giftCardCounter) {this->giftCardCounter = giftCardCounter;}
+
+// Serialize-deserialize
+void IdGenerator::serialize(std::ofstream& out) const {
+    out.write(reinterpret_cast<const char*>(&this->workerId), sizeof(this->workerId));
+    out.write(reinterpret_cast<const char*>(&this->transactionId), sizeof(this->transactionId));
+    out.write(reinterpret_cast<const char*>(&this->categoryId), sizeof(this->categoryId));
+    out.write(reinterpret_cast<const char*>(&this->giftCardCounter), sizeof(this->giftCardCounter));
+}
+
+void IdGenerator::deserialize(std::ifstream& in) {
+    in.read(reinterpret_cast<char*>(&this->workerId), sizeof(this->workerId));
+    in.read(reinterpret_cast<char*>(&this->transactionId), sizeof(this->transactionId));
+    in.read(reinterpret_cast<char*>(&this->categoryId), sizeof(this->categoryId));
+    in.read(reinterpret_cast<char*>(&this->giftCardCounter), sizeof(this->giftCardCounter));
+}

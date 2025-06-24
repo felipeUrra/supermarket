@@ -33,7 +33,6 @@ public:
 
     void setDiscount(double discount);
 
-
     const CustomString getTypeAsString() const;
 
     // Serialize-deserialize

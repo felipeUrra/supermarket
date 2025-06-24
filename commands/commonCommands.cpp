@@ -49,6 +49,7 @@ void CommonCommands::registerUser(Supermarket* supermarket) {
     } else if (role == "cashier") {
         worker = new Cashier(IdGenerator::getInstance(), firstName, lastName, age, phoneNumber, password);
         // adding the cashier to the pending list in supermarket
+
         supermarket->addCashier((Cashier*)worker);
         ConsoleService::printLine("Cashier registration pending approval from a manager.\n");
         return;
@@ -112,7 +113,6 @@ void CommonCommands::listWorkers(Supermarket* supermarket) {
             + " ID: " + CustomString::valueOf(w->getId()) + " phone number: " + w->getPhoneNumber()
             + " password: " + w->getPassword());
         
-        return;
     }
     ConsoleService::printLine("");
 }
@@ -171,6 +171,53 @@ void CommonCommands::listProductsByCategory(Supermarket* supermarket) {
 
     ConsoleService::printLine("");
 }
+
+void CommonCommands::listTransactions(Supermarket* supermarket) {
+    if (supermarket->getTransactionsList().getSize() == 0) {
+        ConsoleService::printLine("There are no transactions!\n");
+    }
+    
+    for (int i = 0; i < supermarket->getTransactionsList().getSize(); i++) {
+        Transaction* t = supermarket->getTransactionsList()[i];
+
+        std::cout << "Transaction ID: " << t->getId()
+                << " Cashier ID: " << t->getCashierId() << "\n"
+                << "Date: " << t->getDate() << " Time: " << t->getTime() << "\n";
+
+        for (int j = 0; j < t->getProductsName().getSize(); j++) {
+            std::cout << t->getProductsName()[j] << " - ";
+
+            if (supermarket->getProductByName(t->getProductsName()[j])->getType() == ProductType::ByWeight) {
+                std::cout << t->getPrices()[j] << "lv/kg - "
+                        << t->getQuantities()[j] << "\n";
+                
+                continue;
+            }
+
+            std::cout << t->getPrices()[j] << " - " << t->getQuantities()[j] << "\n";
+        }
+        
+    }
+
+    ConsoleService::printLine("");
+}
+
+void CommonCommands::listFeed(Supermarket* supermarket) {
+    if (supermarket->getFeedList().getSize() == 0) {
+        ConsoleService::printLine("There are no feed!\n");
+    }
+    
+    for (int i = 0; i < supermarket->getFeedList().getSize(); i++) {
+        Feed* f = supermarket->getFeedList()[i];
+
+        ConsoleService::printLine(f->getDate() + " - " + f->getTime() + ": "
+                + f->getDescription() + " by " + f->getAuthorName() + " " + f->getAuthorName());
+    }
+    
+    ConsoleService::printLine("");
+}
+
+void CommonCommands::leave(Supermarket* supermarket) {return;}
 
 void CommonCommands::exit(bool& exit) {
     ConsoleService::printLine("Exiting the program...");

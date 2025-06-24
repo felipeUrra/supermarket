@@ -17,4 +17,8 @@ public:
     //getters and setters
     int getAvailableAmount() const;
     void setAvailableAmount(int availableKg);
+
+    // Serialize-deserialize
+    void serialize(std::ofstream& out) const override;
+    void deserialize(std::ifstream& in);
 };

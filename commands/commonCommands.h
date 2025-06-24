@@ -19,6 +19,10 @@ public:
     static void listWorkers(Supermarket* supermarket);
     static void listProducts(Supermarket* supermarket);
     static void listProductsByCategory(Supermarket* supermarket);
+    static void listTransactions(Supermarket* supermarket);
+    static void listFeed(Supermarket* supermarket);
+
+    static void leave(Supermarket* supermarket);
 
     static void exit(bool& exit);
 };

@@ -3,6 +3,7 @@
 // OOP(practice) - 2024-2025
 
 #pragma once
+#include <fstream>
 
 class IdGenerator {
 private:
@@ -28,4 +29,8 @@ public:
     void setTransactionId(int transactionId);
     void setCategoryId(int categoryId);
     void setGiftCardCounter(int giftCardCounter);
+
+    // Serialize-deserialize
+    void serialize(std::ofstream& out) const;
+    void deserialize(std::ifstream& in);
 };

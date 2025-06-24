@@ -35,6 +35,16 @@ void ConsoleService::detectCommand(Worker*& loggedUser, Supermarket* supermarket
         CommonCommands::logout(supermarket, loggedUser);
     } else if (cmd == "list-user-data") {
         CommonCommands::listUserData(supermarket, loggedUser);
+    } else if (cmd == "list-workers") {
+        CommonCommands::listWorkers(supermarket);
+    } else if (cmd == "list-products") {
+        CommonCommands::listProducts(supermarket);
+    } else if (cmd == "list-products-by-category") {
+        CommonCommands::listProductsByCategory(supermarket);
+    } else if (cmd == "list-transactions") {
+        CommonCommands::listTransactions(supermarket);
+    } else if (cmd == "list-feed") {
+        CommonCommands::listFeed(supermarket);
     } else if (cmd == "approve") {
         ManagerCommands::approveCashier(supermarket, loggedUser);
     } else if (cmd == "add-category") {
@@ -52,7 +62,7 @@ void ConsoleService::detectCommand(Worker*& loggedUser, Supermarket* supermarket
     }
     else {
         ConsoleService::printLine("Unknown command: " + cmd);
-        ConsoleService::printLine("Please try again.");
+        ConsoleService::printLine("Please try again.\n");
         ConsoleService::discardInput();
     }
 }

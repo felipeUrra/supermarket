@@ -17,11 +17,15 @@ public:
     Category(IdGenerator& idGenerator, const CustomString name, const CustomString description);
     ~Category() = default;
 
-    //getters and setters
+    // getters and setters
     const CustomString& getName() const;
     const CustomString& getDescription() const;
     int getId() const;
 
     void setName(const CustomString& name);
     void setDescription(const CustomString& description);
+
+    // Serialize-deserialize
+    void serialize(std::ofstream& out) const;
+    void deserialize(std::ifstream& in);
 };
