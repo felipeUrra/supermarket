@@ -4,17 +4,21 @@
 
 #include "commonCommands.h"
 #include "../services/consoleService.h"
+#include "../services/fileService.h"
 #include "../utils/utils.h"
 #include "../utils/idGenerator.h"
 #include "../utils/randomNumberGenerator.h"
+#include "../products/productByUnit.h"
+#include "../products/productByWeight.h"
 #include "../workers/worker.h"
 #include "../workers/manager.h"
 #include "../workers/cashier.h"
+#include <iostream>
 
 void CommonCommands::registerUser(Supermarket* supermarket) {
     CustomString role = ConsoleService::readData<CustomString>();
 	if (role != "manager" && role != "cashier") {
-		ConsoleService::printLine("Invalid role");
+		ConsoleService::printLine("Invalid role\n");
         ConsoleService::discardInput();
         return;
 	}
@@ -22,7 +26,7 @@ void CommonCommands::registerUser(Supermarket* supermarket) {
     CustomString lastName = ConsoleService::readData<CustomString>();
     CustomString phoneNumber = ConsoleService::readData<CustomString>();
     if (!Utils::isValidPhoneNumber(phoneNumber)) {
-		ConsoleService::printLine("Invalid phone number");
+		ConsoleService::printLine("Invalid phone number\n");
         ConsoleService::discardInput();
 		return;
 	}
@@ -40,32 +44,31 @@ void CommonCommands::registerUser(Supermarket* supermarket) {
         
         Manager* manager = dynamic_cast<Manager*>(worker);
         ConsoleService::printLine("Special code: " + manager->getSpecialCode());
-        //return; la version final tiene que tener este return
+        FileService::createSpecialCodeFile(manager->getId(), manager->getSpecialCode());
+        return;
     } else if (role == "cashier") {
         worker = new Cashier(IdGenerator::getInstance(), firstName, lastName, age, phoneNumber, password);
         // adding the cashier to the pending list in supermarket
         supermarket->addCashier((Cashier*)worker);
-        ConsoleService::printLine("Cashier registration pending approval from a manager.");
+        ConsoleService::printLine("Cashier registration pending approval from a manager.\n");
         return;
     }
-    // quitar esto para version final
-    ConsoleService::printLine("User registered successfully! " + worker->getName() + " " + worker->getLastName() + " with ID: " + (CustomString::valueOf(worker->getId())));
 }
 
 void CommonCommands::login(Supermarket* supermarket, Worker*& loggedUser) {
     if (loggedUser != nullptr) {
-        ConsoleService::printLine("You are already logged in as " + loggedUser->getName());
+        ConsoleService::printLine("You are already logged in as " + loggedUser->getName() + "\n");
         ConsoleService::discardInput();
         return;
     }
 
     int id = ConsoleService::readData<int>();
     CustomString password = ConsoleService::readData<CustomString>();
-    for (size_t i = 0; i < supermarket->getWorkersList().getSize(); i++) {
+    for (int i = 0; i < supermarket->getWorkersList().getSize(); i++) {
         Worker* worker = supermarket->getWorkersList()[i];
         if (worker->getId() == id && worker->getPassword() == password) {
             loggedUser = worker;
-            ConsoleService::printLine("Login successful! Welcome " + worker->getName() + " " + worker->getLastName());
+            ConsoleService::printLine("Login successful! Welcome " + worker->getName() + " " + worker->getLastName() + "\n");
             return;
         }
     }
@@ -73,7 +76,7 @@ void CommonCommands::login(Supermarket* supermarket, Worker*& loggedUser) {
 
 void CommonCommands::logout(Supermarket* supermarket, Worker*& loggedUser) {
     if (loggedUser == nullptr) {
-        ConsoleService::printLine("Nobody is logged!");
+        ConsoleService::printLine("Nobody is logged!\n");
         ConsoleService::discardInput();
         return;
     }
@@ -87,12 +90,86 @@ void CommonCommands::listUserData(Supermarket* supermarket, Worker* loggedUser) 
         ConsoleService::printLine(loggedUser->getRoleAsString() + ": "
             + loggedUser->getName() + " " + loggedUser->getLastName()
             + " ID: " + CustomString::valueOf(loggedUser->getId()) + " phone number: " + loggedUser->getPhoneNumber()
-            + " password: " + loggedUser->getPassword());
+            + " password: " + loggedUser->getPassword() + "\n");
         
         return;
     }
 
-    ConsoleService::printLine("There is no user logged!");
+    ConsoleService::printLine("There is no user logged!\n");
+}
+
+void CommonCommands::listWorkers(Supermarket* supermarket) {
+    if (supermarket->getWorkersList().getSize() == 0) {
+        ConsoleService::printLine("There are no workers!\n");
+        return;
+    }
+    
+    for (int i = 0; i < supermarket->getWorkersList().getSize(); i++) {
+        Worker* w = supermarket->getWorkersList()[i];
+
+        ConsoleService::printLine(w->getRoleAsString() + ": "
+            + w->getName() + " " + w->getLastName()
+            + " ID: " + CustomString::valueOf(w->getId()) + " phone number: " + w->getPhoneNumber()
+            + " password: " + w->getPassword());
+        
+        return;
+    }
+    ConsoleService::printLine("");
+}
+
+void CommonCommands::listProducts(Supermarket* supermarket) {
+    if (supermarket->getProductsList().getSize() == 0) {
+        ConsoleService::printLine("There are no products!\n");
+        return;
+    }
+
+    for (int i = 0; i < supermarket->getProductsList().getSize(); i++) {
+        Product* p = supermarket->getProductsList()[i];
+
+        if (p->getType() == ProductType::ByWeight) {
+            ProductByWeight* bw = (ProductByWeight*)p;
+            std::cout << bw->getName() << " - " << bw->getPrice() << "/kg - " << bw->getAvailableKg() << "\n";
+            continue;
+        }
+        
+        ProductByUnit* bu = (ProductByUnit*)p; 
+        std::cout << bu->getName() << " - " << bu->getPrice() << " - " << bu->getAvailableAmount() << "\n";
+    }
+
+    ConsoleService::printLine("");
+}
+
+void CommonCommands::listProductsByCategory(Supermarket* supermarket) {
+    int categoryId;
+    categoryId = ConsoleService::readData<int>();
+
+    if (supermarket->getProductsList().getSize() == 0) {
+        ConsoleService::printLine("There are no products!\n");
+        return;
+    }
+
+    for (int i = 0; i < supermarket->getProductsList().getSize(); i++) {
+        Product* p = supermarket->getProductsList()[i];
+        Category* c = supermarket->getCategoryById(categoryId);
+        
+        if (c == nullptr) {
+            ConsoleService::printLine("That category doesn't exist!");
+            return;
+        }
+
+        if (p->getCategoryName() == c->getName()) {
+            if (p->getType() == ProductType::ByWeight) {
+                ProductByWeight* bw = (ProductByWeight*)p;
+                std::cout << bw->getName() << " - " << bw->getPrice() << "/kg - " << bw->getAvailableKg() << "\n";
+                continue;
+            }
+        
+            ProductByUnit* bu = (ProductByUnit*)p;
+            std::cout << bu->getName() << " - " << bu->getPrice() << " - " << bu->getAvailableAmount();
+        }
+    }
+
+    ConsoleService::printLine("");
 }
 
 void CommonCommands::exit(bool& exit) {

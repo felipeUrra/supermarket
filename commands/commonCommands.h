@@ -14,6 +14,11 @@ public:
     static void registerUser(Supermarket* supermarket);
     static void login(Supermarket* supermarket, Worker*& loggedUser);
     static void logout(Supermarket* supermarket, Worker*& loggedUser);
+
     static void listUserData(Supermarket* supermarket, Worker* loggedUser);
+    static void listWorkers(Supermarket* supermarket);
+    static void listProducts(Supermarket* supermarket);
+    static void listProductsByCategory(Supermarket* supermarket);
+
     static void exit(bool& exit);
 };
