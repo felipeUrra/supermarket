@@ -53,7 +53,14 @@ bool Utils::isAllGoodWithDataEntry(double var) {
 }
 
 bool Utils::isValidPhoneNumber(const CustomString& phoneNumber) {
-    // TODO implement
+    const char* str = phoneNumber.c_str();
+    
+    for (int i = 0; i < phoneNumber.getSize(); i++) {
+        if (!(str[i] >= '0' && str[i] <= '9')) {
+            return false;
+        }
+    }
+
     return true;
 }
 
