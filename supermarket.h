@@ -5,9 +5,11 @@
 #pragma once
 #include "customFunctions/customVector.h"
 #include "workers/worker.h"
+#include "workers/cashier.h"
+#include "feed.h"
 #include "giftCards/giftCard.h"
 #include "products/product.h"
-#include "workers/cashier.h"
+#include "transaction.h"
 
 class Supermarket {
 private:
@@ -17,6 +19,9 @@ private:
     CustomVector<Category*> categoriesList;
     CustomVector<Product*> productsList;
     CustomVector<GiftCard*> giftCardsList;
+    CustomVector<Transaction*> transactionsList;
+    CustomVector<Feed*> feedList;
+    
 public:
     Supermarket() = default;
     ~Supermarket() = default; // TODO hacer la implementacion
@@ -28,8 +33,14 @@ public:
     CustomVector<Category*>& getCategoriesList();
     CustomVector<Product*>& getProductsList();
     CustomVector<GiftCard*>& getGiftCardsList();
+    CustomVector<Transaction*>& getTransactionsList();
+    CustomVector<Feed*>& getFeedList();
+
     void addCategory(Category* category);
+
+    Worker* getWorkerById(int id);
     Category* getCategoryByName(const CustomString& name);
+    Category* getCategoryById(int id);
     GiftCard* getGiftCarByCode(const CustomString& code);
     Product* getProductByName(const CustomString& name);
     
