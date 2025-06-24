@@ -8,21 +8,20 @@
 #include "customFunctions/customVector.h"
 #include "supermarket.h"
 #include "giftCards/giftCard.h"
+#include <fstream>
 
 class Transaction {
 private:
+    int id;
     int cashierId;
     double total;
     CustomString date;
     CustomString time;
-    int id;
     CustomVector<CustomString> productsName;
     CustomVector<double> prices;
     CustomVector<double> quantities;
-    // TODO vector que tenga las cantidades de un producto
 
-
-    void setActualDateAndTime(); // maybe put it in a class for Utils
+    void setActualDateAndTime();
 
 public:
     Transaction(IdGenerator& idGenerator);
@@ -43,4 +42,8 @@ public:
     void setTotal(double total);
 
     void applyGiftCard(GiftCard* gc, Supermarket* supermarket);
+
+    // serialize-deserialize
+    void serialize(std::ofstream& out) const;
+    void deserialize(std::ifstream& in);
 };

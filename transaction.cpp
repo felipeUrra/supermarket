@@ -101,3 +101,56 @@ void Transaction::applyGiftCard(GiftCard* gc, Supermarket* supermarket) {
         ConsoleService::printLine("'%' applied to all the products! Transaction completed");
     } 
 }
+
+// serialize-deserialize
+void Transaction::serialize(std::ofstream& out) const {
+    out.write(reinterpret_cast<const char*>(&this->id), sizeof(this->id));
+    out.write(reinterpret_cast<const char*>(&this->cashierId), sizeof(this->cashierId));
+    out.write(reinterpret_cast<const char*>(&this->total), sizeof(this->total));
+    this->date.serialize(out);
+    this->time.serialize(out);
+
+    int productsNameCount = this->productsName.getSize();
+    out.write(reinterpret_cast<const char*>(&productsNameCount), sizeof(productsNameCount));
+    for (int i = 0; i < productsNameCount; i++) {
+        this->productsName[i].serialize(out);
+    }
+
+    int pricesCount = this->prices.getSize();
+    out.write(reinterpret_cast<const char*>(&pricesCount), sizeof(pricesCount));
+    for (int i = 0; i < pricesCount; i++) {
+        out.write(reinterpret_cast<const char*>(&this->prices[i]), sizeof(this->prices[i]));
+    }
+
+    int quantitiesCount = this->quantities.getSize();
+    out.write(reinterpret_cast<const char*>(&quantitiesCount), sizeof(quantitiesCount));
+    for (int i = 0; i < quantitiesCount; i++) {
+        out.write(reinterpret_cast<const char*>(&this->quantities[i]), sizeof(this->quantities[i]));
+    }
+}
+
+void Transaction::deserialize(std::ifstream& in) {
+    in.read(reinterpret_cast<char*>(&this->id), sizeof(this->id));
+    in.read(reinterpret_cast<char*>(&this->cashierId), sizeof(this->cashierId));
+    in.read(reinterpret_cast<char*>(&this->total), sizeof(this->total));
+    this->date.deserialize(in);
+    this->time.deserialize(in);
+
+    int productsNameCount;
+    in.read(reinterpret_cast<char*>(&productsNameCount), sizeof(productsNameCount));
+    for (int i = 0; i < productsNameCount; i++) {
+        this->productsName[i].deserialize(in);
+    }
+
+    int pricesCount;
+    in.read(reinterpret_cast<char*>(&pricesCount), sizeof(pricesCount));
+    for (int i = 0; i < pricesCount; i++) {
+        in.read(reinterpret_cast<char*>(&this->prices[i]), sizeof(this->prices[i]));
+    }
+
+    int quantitiesCount;
+    in.read(reinterpret_cast<char*>(&quantitiesCount), sizeof(quantitiesCount));
+    for (int i = 0; i < quantitiesCount; i++) {
+        in.read(reinterpret_cast<char*>(&this->quantities[i]), sizeof(this->quantities[i]));
+    }
+}

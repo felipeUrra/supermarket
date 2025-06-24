@@ -9,8 +9,9 @@ Feed::Feed() : description("") {
     setActualDateAndTime();
 }
 
-Feed::Feed(Worker* author, const CustomString& description) :
-    author(author),
+Feed::Feed(const CustomString& authorName, const CustomString& authorLastName, const CustomString& description) :
+    authorName(authorName),
+    authorLastName(authorLastName),
     description(description)
     {
         setActualDateAndTime();
@@ -34,10 +35,27 @@ void Feed::setActualDateAndTime() {
 
 
 //getters and setters
-Worker* Feed::getAuthor() {return this->author;}
+const CustomString& Feed::getAuthorName() const {return this->authorName;}
+const CustomString& Feed::getAuthorLastName() const {return this->authorLastName;}
 const CustomString& Feed::getDescription() const {return this->description;}
 const CustomString& Feed::getDate() const {return this->date;}
 const CustomString& Feed::getTime() const {return this->time;}
 
-void Feed::setWorker(Worker* author) {this->author = author;}
 void Feed::setDescription(const CustomString& description) {this->description = description;}
+
+// serialize-deserialize
+void Feed::serialize(std::ofstream& out) const {
+    this->authorName.serialize(out);
+    this->authorLastName.serialize(out);
+    this->description.serialize(out);
+    this->date.serialize(out);
+    this->time.serialize(out);
+}
+
+void Feed::deserialize(std::ifstream& in) {
+    this->authorName.deserialize(in);
+    this->authorLastName.deserialize(in);
+    this->description.deserialize(in);
+    this->date.deserialize(in);
+    this->time.deserialize(in);
+}

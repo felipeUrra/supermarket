@@ -3,28 +3,34 @@
 // OOP(practice) - 2024-2025
 
 #pragma once
-#include "workers/worker.h"
+#include "customFunctions/customString.h"
+#include <fstream>
 
 class Feed {
 private:
-    Worker* author;
-    CustomString description;
+    CustomString authorName;
+    CustomString authorLastName;
+    CustomString description; // it will be the command name, bc it is descriptive enough
     CustomString date;
     CustomString time;
 
-    void setActualDateAndTime(); // maybe put it in a class for Utils
+    void setActualDateAndTime();
 
 public:
     Feed();
-    Feed(Worker* author, const CustomString& description);
+    Feed(const CustomString& authorName, const CustomString& authorLastName, const CustomString& description);
     ~Feed() = default;
 
     //getters and setters
-    Worker* getAuthor();
+    const CustomString& getAuthorName() const;
+    const CustomString& getAuthorLastName() const;
     const CustomString& getDescription() const;
     const CustomString& getDate() const;
     const CustomString& getTime() const;
 
-    void setWorker(Worker* author);
     void setDescription(const CustomString& description);
+
+    // serialize-deserialize
+    void serialize(std::ofstream& out) const;
+    void deserialize(std::ifstream& in);
 };
