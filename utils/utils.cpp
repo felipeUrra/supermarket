@@ -64,6 +64,14 @@ bool Utils::isValidPhoneNumber(const CustomString& phoneNumber) {
     return true;
 }
 
+void Utils::createFeed(Supermarket* supermarket, Worker* loggedUser, const CustomString& commandName) {
+    Feed* feed = new Feed(loggedUser->getName(),
+            loggedUser->getLastName(),
+            commandName);
+    
+    supermarket->getFeedList().push_back(feed);
+}
+
 
 // Serialize-deserialize
 void Utils::saveSystemState(const System& system, const CustomString& filename) {

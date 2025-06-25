@@ -15,6 +15,8 @@ public:
     static bool isAllGoodWithDataEntry(double var);
     static bool isValidPhoneNumber(const CustomString& phoneNumber);
 
+    static void createFeed(Supermarket* supermarket, Worker* loggedUser, const CustomString& commandName);
+
     static void saveSystemState(const System& system, const CustomString& filename);
     static void loadSystemState(System& system, const CustomString& filename);    
 };

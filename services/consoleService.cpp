@@ -35,6 +35,7 @@ void ConsoleService::detectCommand(Worker*& loggedUser, Supermarket* supermarket
         CommonCommands::logout(supermarket, loggedUser);
     } else if (cmd == "list-user-data") {
         CommonCommands::listUserData(supermarket, loggedUser);
+        ConsoleService::printLine("");
     } else if (cmd == "list-workers") {
         CommonCommands::listWorkers(supermarket);
     } else if (cmd == "list-products") {
@@ -45,6 +46,8 @@ void ConsoleService::detectCommand(Worker*& loggedUser, Supermarket* supermarket
         CommonCommands::listTransactions(supermarket);
     } else if (cmd == "list-feed") {
         CommonCommands::listFeed(supermarket);
+    } else if (cmd == "leave") {
+        CommonCommands::leave(supermarket, loggedUser);
     } else if (cmd == "approve") {
         ManagerCommands::approveCashier(supermarket, loggedUser);
     } else if (cmd == "add-category") {
@@ -53,10 +56,24 @@ void ConsoleService::detectCommand(Worker*& loggedUser, Supermarket* supermarket
         ManagerCommands::declineCashier(supermarket, loggedUser);
     } else if (cmd == "list-pending") {
         ManagerCommands::listPending(supermarket, loggedUser);
+    } else if (cmd == "list-warned-cashiers") {
+        ManagerCommands::listWarnedCashier(supermarket, loggedUser);
+    } else if (cmd == "warn-cashier") {
+        ManagerCommands::warnCashier(supermarket, loggedUser);
+    } else if (cmd == "fire-cashier") {
+        ManagerCommands::fireCashier(supermarket, loggedUser);
+    } else if (cmd == "promote-cashier") {
+        ManagerCommands::promoteCashier(supermarket, loggedUser);
     } else if (cmd == "load-gift-cards") {
         ManagerCommands::loadGiftCards(supermarket, loggedUser);
+    } else if (cmd == "load-products") {
+        ManagerCommands::loadProducts(supermarket, loggedUser);
     } else if (cmd == "add-product") {
         ManagerCommands::addProduct(supermarket, loggedUser);
+    } else if (cmd == "delete-category") {
+        ManagerCommands::deleteCategory(supermarket, loggedUser);
+    } else if (cmd == "delete-product") {
+        ManagerCommands::deleteProduct(supermarket, loggedUser);
     } else if (cmd == "sell") {
         CashierCommands::sell(supermarket, loggedUser);
     }

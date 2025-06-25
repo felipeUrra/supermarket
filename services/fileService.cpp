@@ -52,6 +52,4 @@ void FileService::createSpecialCodeFile(int id, const CustomString& code) {
 
     file << code;
     file.close();
-
-    ConsoleService::printLine("Code: " + str + '\n');
 }

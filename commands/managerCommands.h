@@ -28,7 +28,8 @@ public:
     static void addCategory(Supermarket* supermarket, Worker* loggedUser);
     static void addProductByUnit(Supermarket* supermarket, Worker* loggedUser);
     static void addProductByWeight(Supermarket* supermarket, Worker* loggedUser);
-    static void addProduct(Supermarket* Supermarket, Worker* loggedUser);
+    static void addProduct(Supermarket* supermarket, Worker* loggedUser);
 
     static void deleteCategory(Supermarket* supermarket, Worker* loggedUser);
+    static void deleteProduct(Supermarket* supermarket, Worker* loggedUser);
 };

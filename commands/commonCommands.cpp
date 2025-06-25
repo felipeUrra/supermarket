@@ -45,6 +45,7 @@ void CommonCommands::registerUser(Supermarket* supermarket) {
         Manager* manager = dynamic_cast<Manager*>(worker);
         ConsoleService::printLine("Special code: " + manager->getSpecialCode());
         FileService::createSpecialCodeFile(manager->getId(), manager->getSpecialCode());
+        std::cout << "Code: " << manager->getId() << "_special_code.txt\n\n";
         return;
     } else if (role == "cashier") {
         worker = new Cashier(IdGenerator::getInstance(), firstName, lastName, age, phoneNumber, password);
@@ -73,6 +74,9 @@ void CommonCommands::login(Supermarket* supermarket, Worker*& loggedUser) {
             return;
         }
     }
+
+    ConsoleService::printLine("Invalid ID or password. Please try again.\n");
+    ConsoleService::discardInput();
 }
 
 void CommonCommands::logout(Supermarket* supermarket, Worker*& loggedUser) {
@@ -82,6 +86,7 @@ void CommonCommands::logout(Supermarket* supermarket, Worker*& loggedUser) {
         return;
     }
 
+    ConsoleService::printLine("");
     loggedUser = nullptr;
 }
 
@@ -91,7 +96,7 @@ void CommonCommands::listUserData(Supermarket* supermarket, Worker* loggedUser) 
         ConsoleService::printLine(loggedUser->getRoleAsString() + ": "
             + loggedUser->getName() + " " + loggedUser->getLastName()
             + " ID: " + CustomString::valueOf(loggedUser->getId()) + " phone number: " + loggedUser->getPhoneNumber()
-            + " password: " + loggedUser->getPassword() + "\n");
+            + " password: " + loggedUser->getPassword());
         
         return;
     }
@@ -197,9 +202,8 @@ void CommonCommands::listTransactions(Supermarket* supermarket) {
             std::cout << t->getPrices()[j] << " - " << t->getQuantities()[j] << "\n";
         }
         
+        ConsoleService::printLine("");
     }
-
-    ConsoleService::printLine("");
 }
 
 void CommonCommands::listFeed(Supermarket* supermarket) {
@@ -211,13 +215,27 @@ void CommonCommands::listFeed(Supermarket* supermarket) {
         Feed* f = supermarket->getFeedList()[i];
 
         ConsoleService::printLine(f->getDate() + " - " + f->getTime() + ": "
-                + f->getDescription() + " by " + f->getAuthorName() + " " + f->getAuthorName());
+                + f->getDescription() + " by " + f->getAuthorName() + " " + f->getAuthorLastName());
     }
     
     ConsoleService::printLine("");
 }
 
-void CommonCommands::leave(Supermarket* supermarket) {return;}
+void CommonCommands::leave(Supermarket* supermarket, Worker*& loggedUser) {
+    if (loggedUser == nullptr) {
+        ConsoleService::printLine("To use this command you must be logged!\n");
+        return;
+    }
+
+    for (int i = 0; i < supermarket->getWorkersList().getSize(); i++) {
+        if (supermarket->getWorkersList()[i]->getId() == loggedUser->getId()) {
+            delete supermarket->getWorkersList()[i];
+            supermarket->getWorkersList().remove(i);
+        }
+    }
+
+    logout(supermarket, loggedUser);
+}
 
 void CommonCommands::exit(bool& exit) {
     ConsoleService::printLine("Exiting the program...");

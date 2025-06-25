@@ -4,6 +4,7 @@
 
 #include "managerCommands.h"
 #include "../services/consoleService.h"
+#include "../services/fileService.h"
 #include "../utils/utils.h"
 #include "../utils/idGenerator.h"
 #include "../utils/randomNumberGenerator.h"
@@ -44,6 +45,8 @@ void ManagerCommands::approveCashier(Supermarket* supermarket, Worker* loggedUse
             supermarket->addWorker(cashier);
             supermarket->getPendingList().remove(i);
             ConsoleService::printLine("Cashier approved successfully!\n");
+
+            Utils::createFeed(supermarket, loggedUser, "Approve cashier");
             return;
         }
     }
@@ -131,10 +134,139 @@ void ManagerCommands::listPending(Supermarket* supermarket, Worker* loggedUser) 
     ConsoleService::printLine("");
 }
 
-void ManagerCommands::listWarnedCashier(Supermarket* supermarket, Worker* loggedUser) {return;}
-void ManagerCommands::warnCashier(Supermarket* supermarket, Worker* loggedUser) {return;}
-void ManagerCommands::fireCashier(Supermarket* supermarket, Worker* loggedUser) {return;}
-void ManagerCommands::promoteCashier(Supermarket* supermarket, Worker* loggedUser) {return;}
+void ManagerCommands::listWarnedCashier(Supermarket* supermarket, Worker* loggedUser) {
+    if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
+        ConsoleService::printLine("You must be logged in as a manager to add categories.\n");
+        ConsoleService::discardInput();
+        return;
+    }
+
+    int points = ConsoleService::readData<int>();
+    if(points != 100 && points != 200 && points != 300) {
+        ConsoleService::printLine("The warning points are 100, 200 or 300");
+        return;
+    }
+
+    for (int i = 0; i < supermarket->getWorkersList().getSize(); i++) {
+        Worker* w = supermarket->getWorkersList()[i];
+        if (w->getRole() == Role::Cashier) {
+            Cashier* c = (Cashier*)w;
+            for (int j = 0; j < c->getWarnings().getSize(); j++) {
+                if ((int)c->getWarnings()[j]->getWarningGrade() > points) {
+                    CommonCommands::listUserData(supermarket, c);
+                    break;
+                }
+            } 
+        }
+    }
+    ConsoleService::printLine("");
+}
+
+void ManagerCommands::warnCashier(Supermarket* supermarket, Worker* loggedUser) {
+    if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
+        ConsoleService::printLine("You must be logged in as a manager to add categories.\n");
+        ConsoleService::discardInput();
+        return;
+    }
+
+    int cashierId = ConsoleService::readData<int>();
+    int points = ConsoleService::readData<int>();
+    CustomString description = ConsoleService::readWords();
+
+    Worker* w = supermarket->getWorkerById(cashierId);
+    if (w == nullptr || w->getRole() != Role::Cashier) {
+        ConsoleService::printLine("That id isn't of a cashier!\n");
+        return;
+    }
+
+    Cashier* c = (Cashier*)w;
+    
+    if(points != 100 && points != 200 && points != 300) {
+        ConsoleService::printLine("The warning points are 100, 200 or 300");
+        return;
+    }
+
+    Warning* warning = new Warning(loggedUser->getId(), description, (WarningGrade)points);
+    c->getWarnings().push_back(warning);
+    ConsoleService::printLine("");
+
+    Utils::createFeed(supermarket, loggedUser, "Warn cashier");
+}
+
+void ManagerCommands::fireCashier(Supermarket* supermarket, Worker* loggedUser) {
+    if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
+        ConsoleService::printLine("You must be logged in as a manager to add categories.\n");
+        ConsoleService::discardInput();
+        return;
+    }
+
+    int cashierId = ConsoleService::readData<int>();
+    CustomString specialCode = ConsoleService::readData<CustomString>();
+
+    Manager* manager = dynamic_cast<Manager*>(loggedUser);
+    if (!manager || specialCode != manager->getSpecialCode()) {
+        ConsoleService::printLine("Invalid special code. You cannot approve cashiers.\n");
+        return;
+    }
+
+    for (int i = 0; i < supermarket->getWorkersList().getSize(); i++) {
+        Worker* w = supermarket->getWorkersList()[i];
+
+        if (w->getRole() == Role::Cashier && w->getId() == cashierId) {
+            Cashier* c = (Cashier*)w;
+            delete c;
+            supermarket->getWorkersList().remove(i);
+            ConsoleService::printLine("Cashier fired successfully.\n");
+            
+            Utils::createFeed(supermarket, loggedUser, "Fire cashier");
+            return;
+        }
+    }
+    
+    ConsoleService::printLine("There is no cashier with that id!\n");
+}
+
+void ManagerCommands::promoteCashier(Supermarket* supermarket, Worker* loggedUser) {
+    if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
+        ConsoleService::printLine("You must be logged in as a manager to add categories.\n");
+        ConsoleService::discardInput();
+        return;
+    }
+
+    int cashierId = ConsoleService::readData<int>();
+    CustomString specialCode = ConsoleService::readData<CustomString>();
+
+    Manager* manager = dynamic_cast<Manager*>(loggedUser);
+    if (!manager || specialCode != manager->getSpecialCode()) {
+        ConsoleService::printLine("Invalid special code. You cannot approve cashiers.\n");
+        return;
+    }
+
+    for (int i = 0; i < supermarket->getWorkersList().getSize(); i++) {
+        Worker* w = supermarket->getWorkersList()[i];
+        if (w->getRole() == Role::Cashier) {
+            Cashier* c = (Cashier*)w;
+            Manager* m = new Manager(IdGenerator::getInstance(), RandomNumberGenerator::getInstance());
+            m->setId(c->getId());
+            m->setName(c->getName());
+            m->setLastName(c->getLastName());
+            m->setAge(c->getAge());
+            m->setPhoneNumber(c->getPhoneNumber());
+            m->setPassword(c->getPassword());
+            FileService::createSpecialCodeFile(m->getId(), m->getSpecialCode());
+            std::cout << "Code: " << m->getId() << "_special_code.txt\n\n";
+
+            delete c;
+            supermarket->getWorkersList()[i] = m;
+
+            ConsoleService::printLine("Promoted cashier successfully!\n");
+            Utils::createFeed(supermarket, loggedUser, "Promote cashier");
+            return;
+        }
+    }
+    
+    ConsoleService::printLine("There is no cashier with that id!\n");
+}
 
 void ManagerCommands::loadGiftCards(Supermarket* supermarket, Worker* loggedUser) {
     if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
@@ -217,10 +349,101 @@ void ManagerCommands::loadGiftCards(Supermarket* supermarket, Worker* loggedUser
             continue;
         }
     }
-
 }
 
-void ManagerCommands::loadProducts(Supermarket* supermarket, Worker* loggedUser) {return;}
+void ManagerCommands::loadProducts(Supermarket* supermarket, Worker* loggedUser) {
+    if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
+        ConsoleService::printLine("You must be logged in as a manager to load products.\n");
+        ConsoleService::discardInput();
+        return;
+    }
+    CustomString fileName = ConsoleService::readData<CustomString>();
+    std::ifstream file(fileName.c_str());
+    if (!file.is_open()) {
+        ConsoleService::printLine("Could not open file: " + fileName);
+        return;
+    }
+    char* line = new char[1024];
+    while (file.getline(line, 1024)) {
+        CustomString lineStr = line;
+        CustomVector<CustomString> data = lineStr.split(':');
+        if (data.getSize() < 2) {
+            ConsoleService::printLine("Invalid format for product: " + lineStr);
+            continue;
+        }
+        CustomString first = data[0];
+        if (first == "NEW") {
+            if (data.getSize() != 6) {
+                ConsoleService::printLine("Invalid format for new product: " + lineStr);
+                continue;
+            }
+            CustomString productType = data[1];
+            CustomString productName = data[2];
+            CustomString categoryName = data[3];
+            double price = data[4].toDouble();
+            double quantity = data[5].toDouble();
+            if (price <= 0) {
+                ConsoleService::printLine("Price and quantity must be greater than zero: " + lineStr);
+                continue;
+            }
+            // check if the category exists
+            Category* category = supermarket->getCategoryByName(categoryName);
+            if (category == nullptr) {
+                ConsoleService::printLine("Category \"" + categoryName + "\" does not exist. Product not added.");
+                continue;
+            }
+            Product* newProduct = nullptr;
+            if (productType == "product_by_unit" || productType == "PRODUCT_BY_UNIT") {
+                newProduct = new ProductByUnit(productName, categoryName, price, quantity);
+            } else if (productType == "product_by_weight" || productType == "PRODUCT_BY_WEIGHT") {
+                newProduct = new ProductByWeight(productName, categoryName, price, quantity);
+            } else {
+                ConsoleService::printLine("Unknown product type: " + data[5]);
+                continue;
+            }
+            // check if the product already exists
+            if (supermarket->getProductByName(productName) != nullptr) {
+                ConsoleService::printLine("Product with name " + productName + " already exists.");
+                continue;
+            }
+            supermarket->getProductsList().push_back(newProduct);
+            ConsoleService::printLine("Added new product: " + productName + " under category: " + categoryName);
+        } else {
+            CustomString productName = data[1];
+            Product* existingProduct = supermarket->getProductByName(productName);
+            if (existingProduct == nullptr) {
+                ConsoleService::printLine("Product with ID " + productName + " not found.");
+                continue;
+            }
+            CustomString productType = data[0];
+            // if the entered product type is not the same as the existing product type, show an error
+            if ((productType == "product_by_unit" || productType == "PRODUCT_BY_UNIT") && 
+                dynamic_cast<ProductByUnit*>(existingProduct) == nullptr) {
+                ConsoleService::printLine("Product type mismatch for product: " + productName);
+                continue;
+            } else if ((productType == "product_by_weight" || productType == "PRODUCT_BY_WEIGHT") && 
+                       dynamic_cast<ProductByWeight*>(existingProduct) == nullptr) {
+                ConsoleService::printLine("Product type mismatch for product: " + productName);
+                continue;
+            }
+
+            double quantityToAdd = data[2].toDouble();
+            if (quantityToAdd <= 0) {
+                ConsoleService::printLine("Quantity must be greater than zero: " + lineStr);
+                continue;
+            }
+            if (auto* byUnitProduct = dynamic_cast<ProductByUnit*>(existingProduct)) {
+                byUnitProduct->setAvailableAmount(byUnitProduct->getAvailableAmount() + quantityToAdd);
+            } else if (auto* byWeightProduct = dynamic_cast<ProductByWeight*>(existingProduct)) {
+                byWeightProduct->setAvailableKg(byWeightProduct->getAvailableKg() + quantityToAdd);
+            } else {
+                ConsoleService::printLine("Unknown product type for product: " + productName);
+                continue;
+            }
+            ConsoleService::printLine("Updated product: " + productName + " with additional quantity: " + CustomString::valueOf(quantityToAdd));
+        }
+    }
+}
 
 bool ManagerCommands::getProductCommonData(Supermarket* supermarket, Product* product) {
     ConsoleService::printLine("Enter product name: ");
@@ -349,4 +572,57 @@ void ManagerCommands::addProduct(Supermarket* supermarket, Worker* loggedUser) {
     }
 }
 
-void ManagerCommands::deleteCategory(Supermarket* supermarket, Worker* loggedUser) {return;}
+void ManagerCommands::deleteCategory(Supermarket* supermarket, Worker* loggedUser) {
+    
+    if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
+        ConsoleService::printLine("You must be logged in as a manager to delete categories.\n");
+        ConsoleService::discardInput();
+        return;
+    }
+    int categoryId = ConsoleService::readData<int>();
+    Category* category = supermarket->getCategoryById(categoryId);
+    if (category == nullptr) {
+        ConsoleService::printLine("Category with id " + CustomString::valueOf(categoryId) + " does not exist.\n");
+        return;
+    }
+    // Check if there are products in the category
+    for (int i = 0; i < supermarket->getProductsList().getSize(); i++) {
+        if (supermarket->getProductsList()[i]->getCategoryName() == category->getName()) {
+            ConsoleService::printLine("Cannot delete category \"" + category->getName() + "\" because it has products associated with it.\n");
+            return;
+        }
+    }
+    // Remove the category from the list
+    for (int i = 0; i < supermarket->getCategoriesList().getSize(); i++) {
+        if (supermarket->getCategoriesList()[i]->getId() == categoryId) {
+            delete supermarket->getCategoriesList()[i];
+            supermarket->getCategoriesList().remove(i);
+            ConsoleService::printLine("Category deleted successfully.\n");
+            return;
+        }
+    }
+    return;
+}
+
+void ManagerCommands::deleteProduct(Supermarket* supermarket, Worker* loggedUser) {
+    if (loggedUser == nullptr || loggedUser->getRole() != Role::Manager) {
+        ConsoleService::printLine("You must be logged in as a manager to delete products.\n");
+        ConsoleService::discardInput();
+        return;
+    }
+    CustomString productName = ConsoleService::readData<CustomString>();
+    Product* product = supermarket->getProductByName(productName);
+    if (product == nullptr) {
+        ConsoleService::printLine("Product with name \"" + productName + "\" does not exist.\n");
+        return;
+    }
+    // Remove the product from the list
+    for (int i = 0; i < supermarket->getProductsList().getSize(); i++) {
+        if (supermarket->getProductsList()[i]->getName() == productName) {
+            delete supermarket->getProductsList()[i];
+            supermarket->getProductsList().remove(i);
+            ConsoleService::printLine("Product deleted successfully.\n");
+            return;
+        }
+    }
+}

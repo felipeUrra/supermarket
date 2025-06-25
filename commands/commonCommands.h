@@ -22,7 +22,7 @@ public:
     static void listTransactions(Supermarket* supermarket);
     static void listFeed(Supermarket* supermarket);
 
-    static void leave(Supermarket* supermarket);
+    static void leave(Supermarket* supermarket, Worker*& loggedUser);
 
     static void exit(bool& exit);
 };

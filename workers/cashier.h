@@ -28,6 +28,8 @@ public:
     int getTransactionsCount() const;
     CustomVector<Warning*>& getWarnings();
 
+    void removeWarning();
+
     // Serialize-deserialize
     void serialize(std::ofstream& out) const override;
     void deserialize(std::ifstream& in);

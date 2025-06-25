@@ -3,6 +3,7 @@
 // OOP(practice) - 2024-2025
 
 #include "supermarket.h"
+#include "services/fileService.h"
 #include "utils/idGenerator.h"
 #include "utils/randomNumberGenerator.h"
 #include "products/productByUnit.h"
@@ -151,8 +152,7 @@ void Supermarket::serialize(std::ofstream& out) const {
     out.write(reinterpret_cast<const char*>(&feedListCount), sizeof(feedListCount));
     for (int i = 0; i < feedListCount; i++) {
         this->feedList[i]->serialize(out);
-    }
-    
+    }    
 
     // serializing IdGeneratorValues;
     IdGenerator::getInstance().serialize(out);
@@ -170,6 +170,7 @@ void Supermarket::deserialize(std::ifstream& in) {
             Manager* m = new Manager(IdGenerator::getInstance(), RandomNumberGenerator::getInstance());
             m->deserialize(in);
             this->workersList.push_back(m);
+            FileService::createSpecialCodeFile(m->getId(), m->getSpecialCode());
             continue;
         }
 
@@ -248,14 +249,18 @@ void Supermarket::deserialize(std::ifstream& in) {
     int transactionsListCount;
     in.read(reinterpret_cast<char*>(&transactionsListCount), sizeof(transactionsListCount));
     for (int i = 0; i < transactionsListCount; i++) {
-        this->transactionsList[i]->deserialize(in);
+        Transaction* transaction = new Transaction(IdGenerator::getInstance());
+        transaction->deserialize(in);
+        this->transactionsList.push_back(transaction);
     }
     
     // deserializing feedList
     int feedListCount;
     in.read(reinterpret_cast<char*>(&feedListCount), sizeof(feedListCount));
     for (int i = 0; i < feedListCount; i++) {
-        this->feedList[i]->deserialize(in);
+        Feed* feed = new Feed();
+        feed->deserialize(in);
+        this->feedList.push_back(feed);
     }
 
     // deserializing IdGenerator

@@ -35,10 +35,11 @@ public:
     const CustomString& getPhoneNumber() const;
     const CustomString& getPassword() const;
 
+    void setId(int id);
     void setName(const CustomString& name);
     void setLastName(const CustomString& lastName);
     void setAge(int age);
-    void setPhoneNumber(CustomString& phoneNumber);
+    void setPhoneNumber(const CustomString& phoneNumber);
     void setPassword(const CustomString& password);
 
     const CustomString getRoleAsString() const;

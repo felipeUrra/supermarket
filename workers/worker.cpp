@@ -33,10 +33,11 @@ int Worker::getAge() const {return this->age;}
 const CustomString& Worker::getPhoneNumber() const {return this->phoneNumber;}
 const CustomString& Worker::getPassword() const {return this->password;}
 
+void Worker::setId(int id) {this->id = id;}
 void Worker::setName(const CustomString& name) {this->name = name;}
 void Worker::setLastName(const CustomString& lastName) {this->lastName = lastName;}
 void Worker::setAge(int age) {this->age = age;}
-void Worker::setPhoneNumber(CustomString& phoneNumber) {this->phoneNumber = phoneNumber;}
+void Worker::setPhoneNumber(const CustomString& phoneNumber) {this->phoneNumber = phoneNumber;}
 void Worker::setPassword(const CustomString& password) {this->password = password;}
 
 const CustomString Worker::getRoleAsString() const {

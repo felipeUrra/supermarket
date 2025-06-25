@@ -3,6 +3,7 @@
 // OOP(practice) - 2024-2025
 
 #include "cashier.h"
+#include "../services/consoleService.h"
 
 Cashier::Cashier(IdGenerator& idGenerator) : Worker(idGenerator, Role::Cashier), transactionsCount(0) {}
 
@@ -22,6 +23,13 @@ CustomVector<Warning*>& Cashier::getWarnings() {return warnings;}
 
 void Cashier::setTransactionsCount(int transactionsCount) {this->transactionsCount = transactionsCount;}
 void Cashier::setWarnings(CustomVector<Warning*>& warnings) {this->warnings = warnings;}
+
+void Cashier::removeWarning() {
+    if (this->transactionsCount % 3 == 0 && this->warnings.getSize() > 0) {
+        this->warnings.remove(0);
+        ConsoleService::printLine("One of your warnings was removed!\n");
+    }
+}
 
 // Serialize-deserialize
 void Cashier::serialize(std::ofstream& out) const {
