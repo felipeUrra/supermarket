@@ -2,6 +2,43 @@
 
 Supermarket Management Software - University project
 
+## Project Description
+
+**supermarket** is a **console-based supermarket management system** written in **C++ (C++11)**. It simulates day-to-day operations in a supermarket by managing **workers (roles such as manager/cashier)**, **products**, and **sales transactions** through a command-driven interface.
+
+The application starts an interactive prompt (`>`) where users can register and log in, then execute commands depending on their role. The system also **persists its state to disk** (loads on startup and saves on exit) so data can carry across runs.
+
+### Key capabilities
+
+- **User & worker management**
+  - Register, login, logout
+  - View user data and list workers
+  - Leave the system (end a session)
+
+- **Manager operations**
+  - Approve/decline cashier accounts
+  - Warn/fire/promote cashiers
+  - Manage product categories
+  - Load products and gift cards from external sources/files
+  - Add/delete products
+
+- **Cashier operations**
+  - Sell products (supports different product types such as by-unit and by-weight items)
+
+- **Inventory & reporting**
+  - List products (including by category)
+  - List transactions
+  - View a system “feed” of events/activities
+
+### Command-driven interface (examples)
+
+Some of the available commands include:
+
+`register`, `login`, `logout`, `list-workers`, `list-products`, `list-products-by-category`, `list-transactions`, `list-feed`,  
+manager: `approve`, `decline`, `add-category`, `delete-category`, `add-product`, `delete-product`, `load-products`, `load-gift-cards`, `warn-cashier`, `fire-cashier`, `promote-cashier`,  
+cashier: `sell`,  
+and `exit` to quit.
+
 ## Build and Run Instructions
 
 ### Using g++ directly
